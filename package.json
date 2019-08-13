@@ -1,0 +1,14 @@
+{
+  "name": "midway-and-uim",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo test"
+  },
+  "keywords": [
+    "midway"
+  ],
+  "author": "lambda",
+  "license": "ISC"
+}
