@@ -15,7 +15,7 @@ export default (appInfo: EggAppInfo) => {
     enable: true,
     buffer: false,
     fileName: `${pkg.name}.log.${appPort}`,
-    dir: '../../logs/statLog',
+    dir: '../logs/statLog',
     flushInterval: 1000,
   },
 
