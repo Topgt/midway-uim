@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo test"
+    "test": "echo test",
+    "preinstall": "cd client && npm install",
+    "postinstall": "cd service && npm install"
   },
   "keywords": [
     "midway"

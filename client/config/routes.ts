@@ -5,6 +5,6 @@ export default [{
   // authority: ['admin', 'user'],
   routes: [{
     path: '/', 
-    component: './index' 
+    component: './static-view/index' 
   }],
-},]
+}]

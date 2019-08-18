@@ -1,6 +1,8 @@
 import { IConfig } from 'umi-types';
 
 import routes from './routes'
+import webpackPlugin from './webpack-plugin'
+
 
 
 const config: IConfig =  {
@@ -13,19 +15,10 @@ const config: IConfig =  {
       dynamicImport: false,
       title: 'client',
       dll: false,
-      
-      routes: {
-        exclude: [
-          /models\//,
-          /services\//,
-          /model\.(t|j)sx?$/,
-          /service\.(t|j)sx?$/,
-          /components\//,
-        ],
-      },
     }],
   ],
   routes,
+  chainWebpack: webpackPlugin,
 }
 
 export default config;

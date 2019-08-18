@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 
 const BaseLayout: React.FC = ({children}) => {
   return (
-    <div >
-      <h1>Yay! Welcome to umi!</h1>
+    <Fragment>
       {children}
-    </div>)
+    </Fragment>)
 }
+
+export default BaseLayout
