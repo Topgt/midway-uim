@@ -1,0 +1,94 @@
+.body {
+  margin-top: 150px;
+  height: 340px;
+  background-size: 329px 380px;
+  background-repeat: no-repeat;
+  position: relative;
+  display: flex;
+  justify-content: center;
+
+  .cir {
+    display: block;
+    width: 250px;
+    height: 250px;
+  }
+
+  .item {
+    position: absolute;
+    display: inline-flex;
+    opacity: .3;
+
+    &:hover {
+      opacity: 1;
+      cursor: default;
+    }
+
+    &:hover~div {
+      opacity: .3 !important;
+    }
+
+    .des {
+      width: 272px;
+      color: #333;
+      transform: translate(0, -28px);
+    }
+
+    .desTitle {
+      font-weight: 600;
+    }
+  }
+
+  .item1 {
+    top: 16px;
+    right: calc(50% + 51px);
+
+    img {
+      display: block;
+      width: 130px;
+      height: 75px;
+      margin-top: 10px;
+    }
+  }
+
+  .item2 {
+    opacity: 1;
+    top: 27px;
+    left: calc(50% + 43px);
+
+    img {
+      display: block;
+      width: 130px;
+      height: 75px;
+      margin-top: 10px;
+    }
+  }
+
+  .item3 {
+    top: 165px;
+    left: calc(50% + 43px);
+
+    img {
+      display: block;
+      width: 130px;
+    }
+
+    & .des{
+      transform: translate(0, 78px);
+    }
+  }
+
+  .item4 {
+    top: 180px;
+    right: calc(50% + 26px);
+
+    img {
+      display: block;
+      height: 100px;
+    }
+
+    & .des{
+      transform: translate(0,50px);
+    }
+  }
+
+}

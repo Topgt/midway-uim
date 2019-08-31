@@ -1,0 +1,30 @@
+.company {
+  margin-top: 120px;
+  display: flex;
+  justify-content: center;
+
+  .item {
+    margin-left: -21px;
+    width: 100px;
+    height: 89px;
+
+    background-repeat: no-repeat;
+    background-size: 100px 85px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:nth-child(2n) {
+      margin-top: 42px;
+    }
+
+    &:nth-child(2n):hover {
+      transform: scale(1.4) translate(0, 2px);
+    }
+
+    &:nth-child(2n-1):hover {
+      transform: scale(1.4) translate(0, -2px);
+    }
+  }
+}
+

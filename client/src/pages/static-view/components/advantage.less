@@ -1,0 +1,32 @@
+.competency {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  .item {
+    margin-top: 10px;
+    width: 24%;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+
+    .iconImg {
+      display: block;
+      width: 70px;
+      transition: transform 1s;
+    }
+
+    &:hover .iconImg {
+      transform: translate(0, -13%);
+    }
+
+    p {
+      margin-top: 30%;
+    }
+  }
+}
+
+

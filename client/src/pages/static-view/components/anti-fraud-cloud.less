@@ -1,0 +1,44 @@
+.antiFraud {
+  display: flex;
+  justify-content: center;
+
+  .item {
+    margin: 55px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    img {
+      display: block;
+      width: 60px;
+      transition: transform 1s;
+    }
+
+    &:hover img {
+      transform: translate(0, -20px);
+    }
+
+    &:first-child .des {
+      border: none;
+    }
+
+    .des {
+      margin-top: 30px;
+      padding: 0 70px;
+      color: #333;
+      border-left: 1px solid #ccc;
+
+      p {
+        width: 156px;
+        text-align: left;
+      }
+
+      p:last-child {
+        font-size: 13px;
+        margin-top: 10px;
+      }
+    }
+  }
+}
