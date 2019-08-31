@@ -6,7 +6,7 @@ import * as path from 'path'
 @provide()
 export default class DB {
 
-  public static async creatConnect(config: any) {  //config: ISequelizeConfig
+  public static async creatConnect(config: any) {  // config: ISequelizeConfig
     const connect = new Sequelize(config)
 
     const modelPath = path.resolve(__dirname, '../models/mysql')

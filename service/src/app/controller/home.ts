@@ -1,18 +1,16 @@
-import { Context, inject, controller, get, provide } from 'midway';
+import { Context, inject, controller, get, provide } from 'midway'
+import {Istat} from '../../lib/stat'
 
 @provide()
-@controller('/')
+@controller('/test')
 export class HomeController {
 
-  @inject()
-  ctx: Context;
-
   @inject('Stat')
-  Stat: any
+  Stat: Istat
 
   @get('/')
-  async index() {
-    this.Stat.looger('create', {active: '浏览'})
-    this.ctx.body = `Welcome to midwayjs!`;
+  async index(ctx: Context) {
+    this.Stat.logger('create', {active: '浏览'})
+    ctx.body = `Welcome to midwayjs!`;
   }
 }
