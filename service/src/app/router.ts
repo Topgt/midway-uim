@@ -10,7 +10,7 @@ export default (app: Application) => {
   // router.get('/api/authority', controller.userInfo.authority)
 
   // router.get('/api/file_tree', controller.fileData.list);
-  router.get('/api/file_content', controller.fileContorller.content)
+  router.get('/app/file_content', controller.fileContorller.content)
   // router.get('/api/down_load', controller.fileData.downLoad)
 
   // 静态文件不会经gzip处理，必须手动处理

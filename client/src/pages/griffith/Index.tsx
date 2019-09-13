@@ -11,7 +11,6 @@ const sources = {
     width: 320,
     height: 240,
     play_url: 'https://zhstatic.zhihu.com/cfe/griffith/zhihu2018_sd.mp4',
-    // play_url: 'http://zhihu-video-output.oss-cn-hangzhou.aliyuncs.com/test/ld-m3u8/999f95fc-0346-11e9-b494-0a580a44d740.m3u8',
   },
   ld: {
     bitrate: 580,
@@ -21,7 +20,6 @@ const sources = {
     width: 320,
     height: 240,
     play_url: 'https://zhstatic.zhihu.com/cfe/griffith/zhihu2018_sd.mp4',
-    // play_url: 'http://zhihu-video-output.oss-cn-hangzhou.aliyuncs.com/test/ld-m3u8/999f95fc-0346-11e9-b494-0a580a44d740.m3u8',
   },
   hd: {
     bitrate: 580,
@@ -31,7 +29,6 @@ const sources = {
     width: 320,
     height: 240,
     play_url: 'https://zhstatic.zhihu.com/cfe/griffith/zhihu2018_sd.mp4',
-    // play_url: 'http://zhihu-video-output.oss-cn-hangzhou.aliyuncs.com/test/ld-m3u8/999f95fc-0346-11e9-b494-0a580a44d740.m3u8',
   },
 }
 

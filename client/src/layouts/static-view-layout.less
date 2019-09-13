@@ -1,6 +1,5 @@
 :global {
   .article {
-    overflow: hidden;
     padding-top: 50px;
     padding-bottom: 70px;
     min-width: 1200px;
@@ -11,6 +10,19 @@
       padding-right: 5px;
       width: 1200px;
       margin: 0 auto;
+
+      &:before {
+        display: table;
+        content: " ";
+        box-sizing: border-box;
+      }
+
+      &:after {
+        clear: both;
+        display: table;
+        content: " ";
+        box-sizing: border-box;
+      }
     }
   
     .title {

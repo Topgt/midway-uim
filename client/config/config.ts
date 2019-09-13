@@ -19,6 +19,12 @@ const config: IConfig =  {
   ],
   routes,
   chainWebpack: webpackPlugin,
+  proxy: {
+    "/app": {
+      "target": "http://localhost:3000/",
+      "changeOrigin": true,
+    }
+  },
 }
 
 export default config;
