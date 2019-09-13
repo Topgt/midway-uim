@@ -6,6 +6,7 @@
     "test": "umi test",
     "lint:es": "eslint --ext .js src mock tests",
     "lint:ts": "tslint \"src/**/*.ts\" \"src/**/*.tsx\"",
+    "lint:fix": "tslint --fix \"src/**/*.ts\" \"src/**/*.tsx\"",
     "precommit": "lint-staged"
   },
   "dependencies": {
