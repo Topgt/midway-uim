@@ -20,32 +20,32 @@ function Advantage () {
         </div>
         <ul className={style.competency}>
           <li className={style.item}>
-            <img src={competency1} alt="competency1" />
+            <img className={style.pick} src={competency1} alt="competency1" />
           </li>
           <li className={style.item}>
-            <img className="iconImg" src={fingerMar} alt="fingerMar" />
+            <img className={style.iconImg} src={fingerMar} alt="fingerMar" />
             <p>全栈被动式设备指纹</p>
           </li>
           <li className={style.item}>
-            <img src={competency2} alt="competency2" />
+            <img className={style.pick} src={competency2} alt="competency2" />
           </li>
           <li className={style.item}>
-            <img className="iconImg" src={iconAI} alt="iconAI" />
+            <img className={style.iconImg} src={iconAI} alt="iconAI" />
             <p>领先的人工智能技术</p>
           </li>
           <li className={style.item}>
-            <img className="iconImg" src={spaceTime} alt="spaceTime" />
+            <img className={style.iconImg} src={spaceTime} alt="spaceTime" />
             <p>时空动能模型</p>
           </li>
           <li className={style.item}>
-            <img src={competency3} alt="competency3" />
+            <img className={style.pick} src={competency3} alt="competency3" />
           </li>
           <li className={style.item}>
-            <img className="iconImg" src={shape} alt="shape" />
+            <img className={style.iconImg} src={shape} alt="shape" />
             <p>毫秒级数据返回</p>
           </li>
           <li className={style.item}>
-            <img src={competency4} alt="competency4" />
+            <img className={style.pick} src={competency4} alt="competency4" />
           </li>
         </ul>
       </div>

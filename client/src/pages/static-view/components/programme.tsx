@@ -88,7 +88,7 @@ const Programme:React.FC<{}> = () => {
           </li>
         </ul>
       </div>
-      <img className={style.imgLine} src={parting} alt="" />
+      <img className="imgLine" src={parting} alt="" />
     </article>
   )
 }

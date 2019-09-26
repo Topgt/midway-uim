@@ -8,7 +8,7 @@ import QQ from '../../../images/icon-qq.png'
 
 function Footer () {
   return (
-    <footer className={style.footer}>
+    <footer className="footer">
       <div className={style.inner}>
         <div>
           <div className={style.item}>
