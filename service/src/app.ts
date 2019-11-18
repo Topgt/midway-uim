@@ -10,5 +10,5 @@ module.exports = (app:any) => {
 
     console.log('✅  Your awesome APP launched')
   })
-  
-};
+
+}

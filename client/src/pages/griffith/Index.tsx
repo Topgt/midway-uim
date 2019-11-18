@@ -19,7 +19,7 @@ const sources = {
     format: 'mp4',
     width: 320,
     height: 240,
-    play_url: 'https://zhstatic.zhihu.com/cfe/griffith/zhihu2018_sd.mp4',
+    play_url: 'https://zhstatic.zhihu.com/cfe/griffith/zhihu2018_ld.mp4',
   },
   hd: {
     bitrate: 580,
@@ -28,7 +28,7 @@ const sources = {
     format: 'mp4',
     width: 320,
     height: 240,
-    play_url: 'https://zhstatic.zhihu.com/cfe/griffith/zhihu2018_sd.mp4',
+    play_url: 'https://zhstatic.zhihu.com/cfe/griffith/zhihu2018_hd.mp4',
   },
 }
 
@@ -39,16 +39,13 @@ const props = {
   cover: 'https://zhstatic.zhihu.com/cfe/griffith/player.png',
   duration: 89,
   sources,
-  error: {
-    message: '出错了'
-  },
   shouldObserveResize: true,
 }
 
 function Index () {
   return (
     <article className={style.article}>
-      <Player {...props} />
+      <Player {...(props as any)} />
     </article>
   )
 }
