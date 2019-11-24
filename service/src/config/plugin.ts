@@ -1,4 +1,11 @@
-import { EggPlugin } from 'midway';
+import { EggPlugin } from 'midway'
+import * as path from 'path'
+
 export default {
   static: true, // default is true
-} as EggPlugin;
+  mysql: {
+    enable: true,
+    path: path.join(__dirname, '../lib/sequelize'),
+  }
+
+} as EggPlugin
