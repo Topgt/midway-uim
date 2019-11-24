@@ -45,7 +45,7 @@
   },
   "midway-bin-clean": [
     ".vscode/.tsbuildinfo",
-    "dist"
+    "../dist/service"
   ],
   "repository": {
     "type": "git",

@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo test",
     "preinstall": "cd client && npm install",
-    "postinstall": "cd service && npm install"
+    "postinstall": "cd service && npm install",
+    "prebuild": "rm -rf dist",
+    "build": "cd client && npm run build",
+    "postbuild": "cd service && npm run build"
   },
   "keywords": [
     "midway"

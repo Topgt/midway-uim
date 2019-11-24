@@ -3,10 +3,9 @@ import { IConfig } from 'umi-types';
 import routes from './routes'
 import webpackPlugin from './webpack-plugin'
 
-
-
 const config: IConfig =  {
   treeShaking: true,
+  outputPath: '../dist/client',
   plugins: [
     // ref: https://umijs.org/plugin/umi-plugin-react.html
     ['umi-plugin-react', {

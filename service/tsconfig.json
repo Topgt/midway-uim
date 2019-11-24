@@ -11,7 +11,7 @@
     "newLine": "lf",
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
-    "outDir": "dist",
+    "outDir": "../dist/service",
     "pretty": true,
     "skipLibCheck": true,
     "strict": true,
