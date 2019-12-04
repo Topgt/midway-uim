@@ -2,7 +2,7 @@ import React from 'react'
 import HeaderNav from './components/header-nav'
 import Banner from './components/banner'
 import ProductFeatures from './components/product-features'
-import Technology from './components/Technology'
+import Technology from './components/technology'
 import Footer from './components/footer'
 
 import img8  from '../../images/item8.png'
