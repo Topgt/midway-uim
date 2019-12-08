@@ -8,8 +8,9 @@
     "preinstall": "cd client && npm install",
     "postinstall": "cd service && npm install",
     "prebuild": "rm -rf dist",
-    "build": "cd client && npm run build",
-    "postbuild": "cd service && npm run build"
+    "build": "cd service && npm run build",
+    "postbuild": "cd client && npm run build"
+    
   },
   "keywords": [
     "midway"

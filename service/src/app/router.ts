@@ -4,6 +4,7 @@ export default (app: Application) => {
   const { controller, router } = app;
 
   router.get('/', controller.index.render);
+  router.get('/v', controller.index.version);
   // router.get('/api', controller.index.version);
 
   // router.get('/api/user_info', controller.userInfo.info);

@@ -6,14 +6,17 @@ import webpackPlugin from './webpack-plugin'
 const config: IConfig =  {
   treeShaking: true,
   outputPath: '../dist/client',
+  runtimePublicPath: true,
   plugins: [
     // ref: https://umijs.org/plugin/umi-plugin-react.html
     ['umi-plugin-react', {
       antd: true,
       dva: true,
-      dynamicImport: false,
       title: 'client',
       dll: false,
+      dynamicImport: {
+        webpackChunkName: true,
+      },
     }],
   ],
   routes,

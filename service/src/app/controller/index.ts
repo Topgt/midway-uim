@@ -1,6 +1,7 @@
 import {Context} from 'midway'
 import {Response} from '../../utils'
-const fs = require('fs');
+import * as path from 'path'
+import * as fs from 'fs'
 
 export default class IndexController {
 	public async version(ctx: Context) {
@@ -8,15 +9,19 @@ export default class IndexController {
 	}
 
 	async render(ctx: Context) {
-		const html = fs.readFileSync('./app/public/index.html', 'utf-8')
+		const app: any = ctx.app
+		const filePath = path.resolve(app.appDir, './client/index.html')
+		const html = fs.readFileSync(filePath, 'utf-8')
 		ctx.set('content-type', 'text/html');
 		ctx.body = html;
 	}
 
 	async gzip(ctx: Context) {
-		const path = ctx.request.path;
-		const text = fs.readFileSync(`./app/public${path}`, 'utf-8');
-		if (/.*\.js/.test(path)) {
+		const app: any = ctx.app
+		const uri: string = ctx.request.path
+		const filePath = path.resolve(app.appDir, `./client/${uri}`)
+		const text = fs.readFileSync(filePath, 'utf-8');
+		if (/.*\.js/.test(filePath)) {
 			ctx.set('content-type', 'application/x-javascript');
 		} else {
 			ctx.set('content-type', 'text/css')
