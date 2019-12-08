@@ -33,7 +33,7 @@ cd dist && cnpm install --production
 
 - 使用pm2启动项目
 ```
-pm2 start pm2.yaml
+cd dist && pm2 start pm2.yaml
 ```
 
 ### 其他配置
