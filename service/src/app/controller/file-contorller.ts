@@ -10,7 +10,7 @@ export default class FileController {
   Stat: Istat
 
   async content(ctx: Context) {
-    const filePath = path.resolve(__dirname, '../public/个人简历.md')
+    const filePath = path.resolve(__dirname, '../../static/个人简历.md')
     const readFile = promisify(fs.readFile)
     const content = await readFile(filePath, {encoding: 'utf-8'})
     const stat =  promisify(fs.stat)

@@ -36,7 +36,7 @@ const HeaderNav: React.FC<Iprops> = ({styleTop, activetI=''}) => {
           </li>
           <Link to="/solution"><li>解决方案</li></Link>
           <Link to="/about/"><li>作者简介</li></Link>
-          <Link to="/vs/"><li>查看源码</li></Link>
+          <a target="_blank" href="https://github.com/Topgt/midway-uim/tree/v1.0.0"><li>查看源码</li></a>
           <li className={style.move} />
         </ul>
       </div>

@@ -36,7 +36,7 @@ cnpm install --production
 pm2 start pm2.yaml
 ```
 
-### 其他配置
+### 其他
 - [环境变量](https://eggjs.org/zh-cn/basics/env.html)   
 在 pm2.yaml 中配置  
 - [启动参数传递](https://midwayjs.org/midway/guide.html#%E5%90%AF%E5%8A%A8%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92)
