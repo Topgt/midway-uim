@@ -37,9 +37,9 @@ export default (appInfo: EggAppInfo) => {
   // };
 
   config.static = {
-    prefix: '/',
+    prefix: '/static',
     dir: [
-      `${path.resolve(appInfo.baseDir, '../client')}`,
+      `${path.resolve(appInfo.baseDir, '../client/static')}`,
       `${path.resolve(appInfo.baseDir, '../static')}`,
     ],
     maxAge: 1, // maxAge 缓存，默认 1 年
@@ -47,7 +47,11 @@ export default (appInfo: EggAppInfo) => {
     // dynamic: true, // 是否支持服务启动后新增文件（如果设置为 false，服务开启后新增的文件不会被载入）
   }
   config.middleware = [
+    'gzip'
   ]
+  config.gzip = {
+      threshold: 30,
+  }
 
   return config;
 };
