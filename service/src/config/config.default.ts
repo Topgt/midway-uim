@@ -11,6 +11,10 @@ export default (appInfo: EggAppInfo) => {
 
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1565504711889_4236';
+  // midway 打包后前非ts文件在src目录，打包后在dist目录，引入该变量同步目录不一致
+  config.dir = ['prod'].includes(appInfo.env)
+                ? path.resolve(appInfo.baseDir, '../')
+                : path.resolve(appInfo.baseDir, './')
 
   config.mysql = {
     name: 'mysqlDB',
@@ -37,9 +41,9 @@ export default (appInfo: EggAppInfo) => {
   // };
 
   config.static = {
-    prefix: '/',
+    prefix: '/static',
     dir: [
-      `${path.resolve(appInfo.baseDir, '../client')}`,
+      `${path.resolve(appInfo.baseDir, '../client/static')}`,
       `${path.resolve(appInfo.baseDir, '../static')}`,
     ],
     maxAge: 1, // maxAge 缓存，默认 1 年
@@ -47,7 +51,11 @@ export default (appInfo: EggAppInfo) => {
     // dynamic: true, // 是否支持服务启动后新增文件（如果设置为 false，服务开启后新增的文件不会被载入）
   }
   config.middleware = [
+    'gzip'
   ]
+  config.gzip = {
+      threshold: 30,
+  }
 
   return config;
 };

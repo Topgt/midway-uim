@@ -28,12 +28,12 @@ cnpm install pm2 -g
 
 - 安装项目依赖
 ```
-cnpm install --production
+cd dist && cnpm install --production
 ```
 
 - 使用pm2启动项目
 ```
-pm2 start pm2.yaml
+cd dist && pm2 start pm2.yaml
 ```
 
 ### 其他

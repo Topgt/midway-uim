@@ -12,7 +12,7 @@ export default (app: Application) => {
 
   // router.get('/api/file_tree', controller.fileData.list);
   router.get('/app/file_content', controller.fileContorller.content)
-  // router.get('/api/down_load', controller.fileData.downLoad)
+  router.get('/app/down_load', controller.fileContorller.downLoad)
 
   // 静态文件不会经gzip处理，必须手动处理
   router.get(/(.*\.js$)|(.*\.css$)/, controller.index.gzip)

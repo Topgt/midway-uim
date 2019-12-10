@@ -21,8 +21,8 @@ export default (config: any, { webpack }: any) => {
     minSize: 300,
     maxSize: 0,
     minChunks: 1,
-    maxAsyncRequests: 5,
-    maxInitialRequests: 3,
+    maxAsyncRequests: 1,
+    maxInitialRequests: 1,
     cacheGroups: {
       vendors: {
         name: 'vendors',
