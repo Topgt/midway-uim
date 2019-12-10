@@ -11,6 +11,10 @@ export default (appInfo: EggAppInfo) => {
 
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1565504711889_4236';
+  // midway 打包后前非ts文件在src目录，打包后在dist目录，引入该变量同步目录不一致
+  config.dir = ['pro'].includes(appInfo.env)
+                ? path.resolve(appInfo.baseDir, '../')
+                : path.resolve(appInfo.baseDir, './')
 
   config.mysql = {
     name: 'mysqlDB',
