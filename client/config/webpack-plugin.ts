@@ -21,21 +21,21 @@ export default (config: any, { webpack }: any) => {
     minSize: 300,
     maxSize: 0,
     minChunks: 1,
-    maxAsyncRequests: 1,
-    maxInitialRequests: 1,
+    maxAsyncRequests: 5,
+    maxInitialRequests: 3,
     cacheGroups: {
       vendors: {
         name: 'vendors',
         chunks: 'all',
-        test: /[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom|lodash|lodash-decorators|redux-saga|re-select|dva|moment)[\\/]/,
+        test: /node_modules|components\/*.tsx$/,
         priority: -10,
       },
-      antdesigns: {
-        name: 'antdesigns',
-        chunks: 'all',
-        test: /[\\/]node_modules[\\/](@ant-design|antd)[\\/]/,
-        priority: -11,
-      }
+      // antdesigns: {
+      //   name: 'antdesigns',
+      //   chunks: 'all',
+      //   test: /[\\/]node_modules[\\/](@ant-design|antd)[\\/]/,
+      //   priority: -11,
+      // }
     }
   })
 

@@ -18,6 +18,9 @@ const config: IConfig =  {
         webpackChunkName: true,
       },
     }],
+    ['umi-plugin-react', {
+      chunks: ['vendors', 'umi']
+  }]
   ],
   routes,
   chainWebpack: webpackPlugin,
