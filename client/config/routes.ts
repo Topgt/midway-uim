@@ -1,4 +1,5 @@
 import { router } from 'dva';
+import { Component } from 'react';
 
 export default [{
   path: '/',
@@ -13,5 +14,6 @@ export default [{
     { path: '/question', component: './static-view/question' },
     { path: '/recordModel', component: './static-view/record-model' },
     { path: '/about', component: './static-view/about' },
+    { path: '/editor', component: './draft-editor'},
   ],
 }]

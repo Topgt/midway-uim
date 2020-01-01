@@ -9,12 +9,15 @@
     "postinstall": "cd service && npm install",
     "prebuild": "rm -rf dist",
     "build": "cd service && npm run build",
-    "postbuild": "cd client && npm run build"
-    
+    "postbuild": "cd client && npm run build",
+    "pack": "node ./bin/pack.js"
   },
   "keywords": [
     "midway"
   ],
   "author": "lambda",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "shelljs": "^0.8.3"
+  }
 }
