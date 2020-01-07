@@ -1,7 +1,17 @@
 import React from 'react'
-import {Editor, EditorState, RichUtils, SelectionState} from 'draft-js'
+import Immutable from 'immutable'
 import style from './style.less'
-import { any } from 'prop-types'
+import {
+  Editor, 
+  EditorState, 
+  RichUtils, 
+  SelectionState, 
+  DefaultDraftBlockRenderMap,
+  convertFromHTML,
+  ContentState
+} from 'draft-js'
+
+type IeditoRef = Editor | null
 
 let defaultInlineStyle = [
   { el: <div style={{ fontWeight: "bold" }}>B</div>, style: 'BOLD' },
@@ -20,32 +30,66 @@ let customStyleMap = {
   'GREEN': { color: '#3a6' }
 }
 
-type IeditoRef = Editor | null
+class MyCustomBlock extends React.Component {
+  constructor(props: any) {
+    super(props);
+  }
+  render() {
+    return (
+      <div className='MyCustomBlock'>
+        {this.props.children}
+      </div>
+    );
+  }
+}
+
+const blockRenderMap = Immutable.Map({
+  'header-two': {
+    element: 'h2',
+    aliasedElements: ['p'],
+  },
+  'section': {
+    element: 'section',
+    wrapper: <MyCustomBlock />,
+  },
+  'center': {
+      element: 'div',
+  },
+})
 
 const DraftEditor: React.FC<{}> = () => {
   
-  const defaultState = EditorState.createEmpty()
+  const sampleMarkup =
+  `<b>Bold text</b>, <i>Italic text</i><br/ >
+  <p>Example link</p>`
+
+  const blocksFromHTML = convertFromHTML(sampleMarkup)
+  const state = ContentState.createFromBlockArray(
+  blocksFromHTML.contentBlocks,
+  blocksFromHTML.entityMap,
+);
+  const defaultState = EditorState.createWithContent(state)
   const [editorState, setEditorState] = React.useState(defaultState)
   const editorRef = React.useRef((null as IeditoRef))
 
   const toggleInlineStyle = (style: string) => {
-    let state = RichUtils.toggleInlineStyle(editorState, style);
-    setEditorState(state);
+    let state = RichUtils.toggleInlineStyle(editorState, style)
+    setEditorState(state)
   }
 
   const moveSelectionToEnd = (editorState: EditorState) => {
-    const content = editorState.getCurrentContent();
-    const blockMap = content.getBlockMap();
-    const key = blockMap.last().getKey();
-    const length = blockMap.last().getLength();
+    const content = editorState.getCurrentContent()
+    const blockMap = content.getBlockMap()
+    const key = blockMap.last().getKey()
+    const length = blockMap.last().getLength()
     const selection = new SelectionState({
-        anchorKey: key,
-        anchorOffset: length,
-        focusKey: key,
-        focusOffset: length,
-    });
-    return EditorState.acceptSelection(editorState, selection);
-  };
+      anchorKey: key,
+      anchorOffset: length,
+      focusKey: key,
+      focusOffset: length,
+    })
+    return EditorState.acceptSelection(editorState, selection)
+  }
 
   return (
     <React.Fragment>
@@ -54,6 +98,15 @@ const DraftEditor: React.FC<{}> = () => {
           <button onClick={() => toggleInlineStyle(item.style)} key={item.style}>
             {item.el}
           </button>)}
+        <button 
+          onClick={() => {
+            const blockType = 'section'
+            const state = RichUtils.toggleBlockType(editorState, blockType)
+            setEditorState(state)
+          }}
+        >
+        toggleBlockType
+        </button>  
       </div>
       <div
         style={{
@@ -67,7 +120,7 @@ const DraftEditor: React.FC<{}> = () => {
             setEditorState(moveSelectionToEnd(editorState))
             setTimeout(() => {
               editorRef.current && editorRef.current.focus()
-            });
+            })
           }
         }}
       >
@@ -75,8 +128,8 @@ const DraftEditor: React.FC<{}> = () => {
           ref={ref => editorRef.current = ref}
           editorState={editorState}
           customStyleMap={customStyleMap}
+          blockRenderMap={DefaultDraftBlockRenderMap.merge(blockRenderMap)}
           onChange={(state) => {
-            // console.log(state)
             setEditorState(state)
           }}
         />
