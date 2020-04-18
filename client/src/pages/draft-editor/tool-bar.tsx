@@ -53,7 +53,9 @@ const ToolBar: React.FC<IToolBar> = (props) => {
                       <span
                         onMouseDown={(e) => {
                           e.preventDefault()
-                          setV((value as string))
+                          if (value !== v) {
+                            setV((value as string))
+                          }
                         }}
                       >
                         <span className="iconfont" dangerouslySetInnerHTML={{__html: `${fontIcon}`}} />
@@ -72,6 +74,7 @@ const ToolBar: React.FC<IToolBar> = (props) => {
         return (
           <ColorPanel
             key={key}
+            initValue={initValue}
             change={(s) => event.fire(`${action}`, s)}
             areas={areas}
             lable={lable}

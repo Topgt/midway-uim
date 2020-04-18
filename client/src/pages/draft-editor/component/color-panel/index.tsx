@@ -8,11 +8,12 @@ interface IcolorPanel{
   areas: IareasValue
   lable?: string
   fontIcon?: string
+  initValue?: string
 }
 
 const ColorPanel: React.FC<IcolorPanel> = (props) => {
-  const {change, areas, lable, fontIcon} = props
-  const [selectColor, setColor] = React.useState('#000')
+  const {change, areas, lable, fontIcon, initValue='#000000'} = props
+  const [selectColor, setColor] = React.useState(initValue)
   const colorLable = (
     <span className={style.lable}>
       <span className="iconfont" dangerouslySetInnerHTML={{__html: `${fontIcon}`}} />
@@ -21,7 +22,7 @@ const ColorPanel: React.FC<IcolorPanel> = (props) => {
   return (
     <Select
       className="tooltip"
-      initValue="#000000"
+      initValue={initValue}
       onChange={change}
       tooltip={lable}
       lable={colorLable}
@@ -39,9 +40,11 @@ const ColorPanel: React.FC<IcolorPanel> = (props) => {
                     className={style.colorItem}
                     key={`${idx}-${i}`}
                     onMouseDown={(e) => {
-                      setv(colorHex)
-                      setColor(colorHex)
                       e.preventDefault()
+                      if(colorHex !== v) {
+                        setv(colorHex)
+                        setColor(colorHex)
+                      }
                     }}
                   >
                     <span 

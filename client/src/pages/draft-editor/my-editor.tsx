@@ -5,8 +5,11 @@ import {
   SelectionState, 
   RichUtils, 
   ContentBlock,
+  convertToRaw,
+  Modifier,
   DefaultDraftBlockRenderMap 
 } from 'draft-js'
+import {Map} from 'immutable'
 import {customStyleMap, blockRenderMap} from './config'
 import {IMyEditor, IeditoRef} from './index.d'
 
@@ -14,22 +17,36 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
   const {ederiotRef, editorState, setEditorState, onChange, event} = props
   const editorRef = React.useRef((null as IeditoRef))
 
-  const stateRef = React.useRef(editorState) // 解决闭包内拿不到最新editorState
+  // 解决闭包内拿不到最新editorState
+  const stateRef = React.useRef(editorState)
   React.useEffect(() => {
     stateRef.current = editorState
   }, [editorState])
 
   React.useEffect(() => {
     event.on('toggleInlineStyle', style => {
-      // console.log('fire event', style)
-      // 解决闭包内拿不到最新editorState
       setEditorState(RichUtils.toggleInlineStyle(stateRef.current, (style as any)))
+    })
+    event.on('toggleBlockType', blockType => {
+      setEditorState(RichUtils.toggleBlockType(stateRef.current, (blockType as any)))
+    })
+    event.on('addBlockType', blockType => {
+      const currentContentState = stateRef.current.getCurrentContent()
+      const selectState = stateRef.current.getSelection()
+      const key = selectState.getStartKey()
+      const data = currentContentState.getBlockForKey(key).getData()
+      const style = Map(JSON.parse((blockType as any)))
+      style.merge(data.toJS())
+      const contentState = Modifier.setBlockData(currentContentState, selectState, style.toJS())
+      const state = EditorState.createWithContent(contentState)
+      setEditorState(state)
     })
   }, [])
 
   const change = (state: EditorState) => {
     const oldText = editorState.getCurrentContent().getPlainText()        
-    const newText = state.getCurrentContent().getPlainText()  
+    const newText = state.getCurrentContent().getPlainText()
+    // console.log(convertToRaw(editorState.getCurrentContent()))
     setEditorState(state)
     if(newText !== oldText){            
       typeof onChange === 'function' && onChange(state)
@@ -38,11 +55,16 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
 
   // 每次变化都会调用，根据不同的key添加不同的className
   const blockStyleFn = (contentBlock: ContentBlock) => {
-    let className = ''
-    if(contentBlock.getType() === 'header-two') {
-      className = 'myclass'
-    }
-    return className
+    // const type = contentBlock.getType()
+    // const metaData = contentBlock.getData()
+    // const styleAttributes = Object.keys(metaData.toJS()).map(key => {
+    //   return `${key.replace(/[A-Z]/g, match => `-${match.toLocaleLowerCase()}`)}: ${metaData.get(key)}`
+    // })
+    // let className = ''
+    // if(contentBlock.getType() === 'header-two') {
+    //   className = 'myclass'
+    // }
+    return ''
   }
 
   const moveSelectionToEnd = (editorState: EditorState) => {
