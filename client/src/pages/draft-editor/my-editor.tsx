@@ -5,9 +5,8 @@ import {
   SelectionState, 
   RichUtils, 
   ContentBlock,
-  convertToRaw,
   Modifier,
-  DefaultDraftBlockRenderMap 
+  DefaultDraftBlockRenderMap
 } from 'draft-js'
 import {Map} from 'immutable'
 import {customStyleMap, blockRenderMap} from './config'
@@ -55,15 +54,6 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
 
   // 每次变化都会调用，根据不同的key添加不同的className
   const blockStyleFn = (contentBlock: ContentBlock) => {
-    // const type = contentBlock.getType()
-    // const metaData = contentBlock.getData()
-    // const styleAttributes = Object.keys(metaData.toJS()).map(key => {
-    //   return `${key.replace(/[A-Z]/g, match => `-${match.toLocaleLowerCase()}`)}: ${metaData.get(key)}`
-    // })
-    // let className = ''
-    // if(contentBlock.getType() === 'header-two') {
-    //   className = 'myclass'
-    // }
     return ''
   }
 

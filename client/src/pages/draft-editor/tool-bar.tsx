@@ -71,11 +71,12 @@ const ToolBar: React.FC<IToolBar> = (props) => {
               }
           </Select>)
       case 'color':
+      case 'background':
         return (
           <ColorPanel
             key={key}
             initValue={initValue}
-            change={(s) => event.fire(`${action}`, s)}
+            change={(s) => event.fire(`${action}`, `${type}-${s}`)}
             areas={areas}
             lable={lable}
             fontIcon={fontIcon}

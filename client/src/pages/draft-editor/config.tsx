@@ -1,17 +1,26 @@
-import Immutable from 'immutable'
 import React from 'react'
+import Immutable from 'immutable'
 import _ from 'lodash'
+import BlockWrapper from './component/block-wrapper'
 
-// 多个可兼容的block样式的组合处理
-const BlockWrapper = (props: any) => {
-  const target =props.children && props.children[0]
-  const block = _.get(target, 'props.children.props.block', {})
-  const textDom = block._map.toJS() || {}
-  return (<div style={textDom.data}>{target}</div>)
+
+export type IareasValue = {value: string | string[], fontIcon?: string, lable?: string}[]
+export interface Iarea {
+  action: string
+  type: string
+  initValue?: string
+  lable?: string
+  fontIcon?: string
+  areas: IareasValue
+}
+export type Iareas = Iarea | Iarea[]
+export interface ItoolbarArea {
+  map(arg0: (toolbarArea: any, idx: any) => JSX.Element): React.ReactNode
+  [i: number]: Iareas
 }
 
 // 自定义块状样式的定义，使用toggleInlineStyle更换不同的key
-export const blockRenderMap = Immutable.Map({
+const blockRenderMap = Immutable.Map({
   'unstyled': { // blockType, contentBlock.type
     element: 'div',  // 行标签
     wrapper: <BlockWrapper />,
@@ -43,21 +52,6 @@ export const blockRenderMap = Immutable.Map({
     wrapper: <BlockWrapper />
   },
 })
-
-export type IareasValue = {value: string | string[], fontIcon?: string, lable?: string}[]
-export interface Iarea {
-  action: string
-  type: string
-  initValue?: string
-  lable?: string
-  fontIcon?: string
-  areas: IareasValue
-}
-export type Iareas = Iarea | Iarea[]
-export interface ItoolbarArea {
-  map(arg0: (toolbarArea: any, idx: any) => JSX.Element): React.ReactNode
-  [i: number]: Iareas
-}
 
 // 配色面板的颜色
 const colors: IareasValue = [
@@ -200,8 +194,8 @@ export const toolbarArea: ItoolbarArea = [
     areas: colors
   }, {
     action: 'toggleInlineStyle',
-    type: 'color',
-    initValue: '1',
+    type: 'background',
+    initValue: '#ffffff',
     lable: '背景色',
     fontIcon: '&#xe6f8;',
     areas: colors
@@ -226,7 +220,10 @@ const customStyleMap: {[key:string]: {[key: string]: string}} = {
 }
 
 colors.forEach(({value}) => {
-  (value as string[]).forEach(s => customStyleMap[s] = {color: s})
+  (value as string[]).forEach(s => {
+    customStyleMap[`color-${s}`] = {color: s}
+    customStyleMap[`background-${s}`] = {background: s}
+  })
 })
 
-export {customStyleMap}
+export {customStyleMap, blockRenderMap}
