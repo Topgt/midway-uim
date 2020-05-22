@@ -13,9 +13,8 @@ import {customStyleMap, blockRenderMap} from './config'
 import {IMyEditor, IeditoRef} from './index.d'
 
 const MyEditor: React.FC<IMyEditor> = (props) => {
-  const {ederiotRef, editorState, setEditorState, onChange, event} = props
+  const {ederiotRef, editorState, setEditorState, onChange, event, stack} = props
   const editorRef = React.useRef((null as IeditoRef))
-
   // 解决闭包内拿不到最新editorState
   const stateRef = React.useRef(editorState)
   React.useEffect(() => {
@@ -23,11 +22,34 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
   }, [editorState])
 
   React.useEffect(() => {
+    // 初始化栈的editorState
+    stack.push(editorState)
+  }, [])
+
+  // 注册事件监听
+  React.useEffect(() => {
     event.on('toggleInlineStyle', style => {
-      setEditorState(RichUtils.toggleInlineStyle(stateRef.current, (style as any)))
+      const newState = RichUtils.toggleInlineStyle(stateRef.current, (style as string))
+      setEditorState(newState)
+      return newState
     })
     event.on('toggleBlockType', blockType => {
-      setEditorState(RichUtils.toggleBlockType(stateRef.current, (blockType as any)))
+      const newState = RichUtils.toggleBlockType(stateRef.current, (blockType as string))
+      setEditorState(newState)
+      return newState
+    })
+    event.on('changeEditorState', action => {
+      // 原生的 撤销和重做栈不完整，会有操作不入栈的情况，
+      // 分别对对内容改变，和变更样式的经过入栈，自己管理撤销和重做栈
+      if ((action as any)  === 'undo') {
+        const state = stack.undo()
+        state && setEditorState((state as EditorState))
+        // setEditorState(EditorState.undo(stateRef.current))
+      } else if ((action as any)  === 'redo') {
+        const state = stack.redo()
+        state && setEditorState((state as EditorState))
+        // setEditorState(EditorState.redo(stateRef.current))
+      }
     })
     event.on('addBlockType', blockType => {
       const currentContentState = stateRef.current.getCurrentContent()
@@ -40,6 +62,12 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
       const state = EditorState.createWithContent(contentState)
       setEditorState(state)
     })
+
+    event.fireFinish((eventName:string, params:any[], result:EditorState) => {
+      if (!['changeEditorState'].includes(eventName) && result) {
+        stack.push(result)
+      }
+    })
   }, [])
 
   const change = (state: EditorState) => {
@@ -47,8 +75,9 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
     const newText = state.getCurrentContent().getPlainText()
     // console.log(convertToRaw(editorState.getCurrentContent()))
     setEditorState(state)
-    if(newText !== oldText){            
+    if(newText !== oldText){       
       typeof onChange === 'function' && onChange(state)
+      stack.push(state)
     }
   }
 

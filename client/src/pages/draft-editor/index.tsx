@@ -1,6 +1,6 @@
 import React from 'react'
 import {EditorState, RichUtils} from 'draft-js'
-import MyEvent from '../../utils/events'
+import {Events, Stack} from '../../utils/index'
 import MyEditor from './my-editor'
 import ToolBar from './tool-bar'
 import {IMyEditor, IToolBar, IeditoRef} from './index.d'
@@ -9,7 +9,8 @@ const Index: React.FC<{}> = () => {
   const state = EditorState.createEmpty()
   const [editorState, setEditorState] = React.useState(state)
   const editorRef = React.useRef((null as IeditoRef))
-  const eventRef = React.useRef(new MyEvent())
+  const eventRef = React.useRef(new Events())
+  const stackRef = React.useRef(new Stack<EditorState>(100))
 
   const toolBarProps:IToolBar = {
     event: eventRef.current,
@@ -17,6 +18,7 @@ const Index: React.FC<{}> = () => {
 
   const editorProps: IMyEditor = {
     event: eventRef.current,
+    stack: stackRef.current,
     ederiotRef: (editor) => editorRef.current = editor,
     editorState,
     setEditorState

@@ -123,12 +123,17 @@ const colors: IareasValue = [
 // tool-bar 配置
 export const toolbarArea: ItoolbarArea = [
   {
-    action: 'toggleInlineStyle',
+    action: 'changeEditorState',
     type: 'bnt',
     areas: [
       {lable: '保存', fontIcon: '&#xe6fe;', value: 'UNDERLINE'},
-      {lable: '撤销', fontIcon: '&#xe629;', value: 'BOLD'},
-      {lable: '重做', fontIcon: '&#xe62a;', value: 'ITALIC'},
+      {lable: '撤销', fontIcon: '&#xe629;', value: 'undo'},
+      {lable: '重做', fontIcon: '&#xe62a;', value: 'redo'}
+    ]
+  }, {
+    action: 'format',
+    type: 'bnt',
+    areas: [
       {lable: '格式刷', fontIcon: '&#xe617;', value: 'STRIKETHROUGH'},
       {lable: '清除格式', fontIcon: '&#xe65b;', value: 'STRIKETHROUGH'},
     ]
@@ -201,7 +206,6 @@ export const toolbarArea: ItoolbarArea = [
     areas: colors
   }]
 ]
-
 
 // 自定义行内样式的定义，使用toggleInlineStyle更换不同的key
 const customStyleMap: {[key:string]: {[key: string]: string}} = {

@@ -1,5 +1,5 @@
 import { Editor, EditorState } from 'draft-js'
-import MyEvent from '../../utils/events'
+import {Events, Stack} from '../../utils/index'
 
 declare module 'react' {
   interface HTMLAttributes<T> extends DOMAttributes<T> {
@@ -11,7 +11,8 @@ declare module 'react' {
 type IeditoRef = Editor | null
 
 interface IMyEditor {
-  event: MyEvent
+  event: Events
+  stack: Stack<EditorState>
   editorState: EditorState
   setEditorState: (state: EditorState) => void
   ederiotRef: (editor:Editor) => Editor
@@ -19,7 +20,7 @@ interface IMyEditor {
 }
 
 interface IToolBar {
-  event: MyEvent
+  event: Events
 }
 
 export {
