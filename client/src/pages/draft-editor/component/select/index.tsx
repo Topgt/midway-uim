@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react"
-import classnames from 'classnames'
 import styl from './select.less'
 
 const Context = React.createContext({} as any)

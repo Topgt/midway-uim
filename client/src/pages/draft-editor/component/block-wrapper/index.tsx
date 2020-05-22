@@ -28,9 +28,8 @@ const BlockWrapper = (props: any) => {
         React.Children.map(props.children, (target, i) => {
           const targetChildren = _.get(target, 'props.children', {})
           const block = _.get(targetChildren, 'props.block', {})
-          // console.log(target)
+          // console.log(block.toJS())
           const style = block.data.toJS() || {}
-          
           if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(target.type) ) {
             // 去除 字体大小的样式
             const newChildren = React.Children.map(targetChildren, (child, i) => {
@@ -44,9 +43,9 @@ const BlockWrapper = (props: any) => {
 
               const blockMap = contentState.get('blockMap')
               const nweBlockMap = blockMap.set(key, newContentBlock)
-              return React.cloneElement(child, {block: newBlock, contentState:  contentState.set('blockMap', nweBlockMap)})
+              return React.cloneElement(child, {block: newBlock, contentState: contentState.set('blockMap', nweBlockMap)})
             })
-            return React.createElement(target.type, { style: style, key: i }, newChildren)
+            return React.cloneElement(target, { style: style, key: i, children:  newChildren})
           }
 
           return React.cloneElement(target, { style: style, key: i })
