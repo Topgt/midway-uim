@@ -44,12 +44,13 @@ interface ISelect<T> extends React.FC<T> {
 
 const Select: ISelect<{
   className?: string
+  disabled?: boolean
   initValue?: string
   tooltip?: string
   lable?: string | React.ReactNode
   onChange?: (v: string) => void
 }> = props => {
-  let { className, tooltip, children, initValue, lable, onChange } = props
+  let { disabled, className, tooltip, children, initValue, lable, onChange } = props
   if (!React.Children.count(children)) {
     return <div />
   }
@@ -101,6 +102,7 @@ const Select: ISelect<{
     <div
       ref={ref => selectRef.current = ref}
       className={styl.select}
+      disabled={disabled}
     >
       <div
         className={className}

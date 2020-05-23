@@ -1,4 +1,5 @@
 import React from 'react'
+import classnames from 'classnames'
 import Select from './component/select'
 import ColorPanel from './component/color-panel'
 import {IToolBar} from './index.d'
@@ -8,22 +9,25 @@ import {toolbarArea, Iarea} from './config'
 const ToolBar: React.FC<IToolBar> = (props) => {
   const { event } = props
 
-  const renderBtn: (i: Iarea['areas'][0], a: string, k: number | string) => React.ReactNode = (inlineStyle, action, key) => (
+  const renderBtn: (i: Iarea['areas'][0], a: string, k: number | string, disabled?: boolean) => React.ReactNode = (inlineStyle, action, key, disabled) => (
     <button
       key={key}
+      disabled={disabled}
+      className={classnames({tooltip: !disabled})}
+      tooltip={inlineStyle.lable}
       onMouseDown={e => {
         e.preventDefault()
         event.fire(`${action}`, inlineStyle.value)
       }}
     >
       <div 
-        className="iconfont tooltip"
-        tooltip={inlineStyle.lable}
+        className="iconfont"
         dangerouslySetInnerHTML={{__html: `${inlineStyle.fontIcon}`}} 
       />
     </button>
   )
   const renderToolbarArea: (t: Iarea, idx: number | string)=>React.ReactNode = (area, key) => {
+    const disabled = true
     const {action, type, areas, initValue, lable, fontIcon} = area
     switch(type) {
       case 'bnt':
@@ -31,7 +35,8 @@ const ToolBar: React.FC<IToolBar> = (props) => {
       case 'select':
         return (
           <Select 
-            className="tooltip"
+            disabled={disabled}
+            className={classnames({tooltip: !disabled})}
             key={key}
             onChange={(style: string) => event.fire(`${action}`, style)}
             initValue={initValue}
