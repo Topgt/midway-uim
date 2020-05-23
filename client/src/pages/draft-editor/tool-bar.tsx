@@ -27,7 +27,7 @@ const ToolBar: React.FC<IToolBar> = (props) => {
     </button>
   )
   const renderToolbarArea: (t: Iarea, idx: number | string)=>React.ReactNode = (area, key) => {
-    const disabled = true
+    const disabled = false
     const {action, type, areas, initValue, lable, fontIcon} = area
     switch(type) {
       case 'bnt':
@@ -80,6 +80,7 @@ const ToolBar: React.FC<IToolBar> = (props) => {
         return (
           <ColorPanel
             key={key}
+            disabled={disabled}
             initValue={initValue}
             change={(s) => event.fire(`${action}`, `${type}-${s}`)}
             areas={areas}

@@ -1,10 +1,12 @@
 import React from 'react'
+import classnames from 'classnames'
 import Select from '../select'
 import {IareasValue} from '../../config'
 import style from './style.less'
 
 interface IcolorPanel{
   change: (s: string) => void
+  disabled: boolean
   areas: IareasValue
   lable?: string
   fontIcon?: string
@@ -12,7 +14,7 @@ interface IcolorPanel{
 }
 
 const ColorPanel: React.FC<IcolorPanel> = (props) => {
-  const {change, areas, lable, fontIcon, initValue='#000000'} = props
+  const {disabled, change, areas, lable, fontIcon, initValue='#000000'} = props
   const [selectColor, setColor] = React.useState(initValue)
   const colorLable = (
     <span className={style.lable}>
@@ -21,7 +23,8 @@ const ColorPanel: React.FC<IcolorPanel> = (props) => {
     </span>)
   return (
     <Select
-      className="tooltip"
+      disabled={disabled}
+      className={classnames({tooltip: !disabled})}
       initValue={initValue}
       onChange={change}
       tooltip={lable}
