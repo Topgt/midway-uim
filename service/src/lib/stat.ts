@@ -8,17 +8,25 @@ interface IstatConfig {
   buffer?: boolean
   dir: string
   fileName: string
-  flushInterval?:number
+  flushInterval?: number
 }
 
-interface obj {
-  [key:string]: string
+interface Iobj {
+  [key: string]: string
 }
 
-const dropKeys = (keys:string[], object:obj):obj => 
+interface Idot {
+  logger: (lt: string, data: Iobj) => void
+}
+
+export interface Istat {
+  logger: (name: string, info: Iobj) => void
+}
+
+const dropKeys = (keys: string[], object: Iobj): Iobj =>
   Object.keys(object)
   .filter(_key => !keys.includes(_key))
-  .reduce((start:obj, key:string)=>{
+  .reduce((start: Iobj, key: string) => {
     const result = start
     result[key] = object[key]
     return result
@@ -28,9 +36,9 @@ function getCurTime() {
   return moment().format('YYYY-MM-DD HH:mm:ss.SSS');
 }
 
-class Dot extends Logger {
+class Dot extends Logger implements Idot {
 
-  constructor (options:IstatConfig) {
+  constructor (options: IstatConfig) {
     super({})
     const {buffer, dir, fileName, flushInterval} = options
     let fileTransport
@@ -49,7 +57,7 @@ class Dot extends Logger {
     this.set('file', fileTransport);
   }
 
-  public looger(lt: string, data:any) {
+  public logger(lt: string, data: Iobj) {
     const msg: string[] = [];
     msg.push(`tm=${getCurTime()}`, `lt=${lt}`);
     Object.keys(data).forEach(key => {
@@ -61,21 +69,21 @@ class Dot extends Logger {
 
 @scope(ScopeEnum.Singleton)
 @provide('Stat')
-export default class Stat {
+export default class Stat implements Istat {
 
-  static dot: any
+  static dot: Idot
 
   public static initStat (options: IstatConfig) {
     this.dot = new Dot(options)
   }
-  looger(name: string, info: any) {
+  logger(name: string, info: any) {
     const body = _.pickBy(
       _.merge({
         e_c: name,
       }, dropKeys(['t', 'lt', 'e_c'], info)),
-    (value:any) => typeof value !== 'undefined')
-    if(Stat.dot) {
-      Stat.dot.looger('', body)
+    (value: any) => typeof value !== 'undefined')
+    if (Stat.dot) {
+      Stat.dot.logger('', body)
     }
   }
 }

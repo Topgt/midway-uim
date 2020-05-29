@@ -1,0 +1,167 @@
+.nav {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 9;
+
+  li {
+    list-style: none;
+  }
+
+  &.top,
+  &:hover {
+    background-color: #fff;
+    height: 65px;
+    line-height: 65px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .4);
+  }
+
+  .navBody {
+    margin: 0 auto;
+    max-width: 1200px;
+    line-height: 65px;
+    height: 65px;
+    display: flex;
+    justify-content: space-between;
+    background-color: transparent;
+  }
+
+  .logo {
+    height: 65px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    img {
+      display: block;
+      width: 55px;
+    }
+  }
+
+  &.top .menu li,
+  &:hover .menu li {
+    color: #333;
+  }
+
+  &.top .logoImg1,
+  &:hover .logoImg1 {
+    display: none;
+  }
+
+  &.top .logoImg2,
+  &:hover .logoImg2 {
+    display: block;
+  }
+
+  img.logoImg2 {
+    display: none;
+  }
+
+  .menu {
+    position: relative;
+    background-color: transparent;
+    z-index: 9;
+
+    li {
+      color: #FFF;
+      float: left;
+      padding: 0 22px;
+      cursor: pointer;
+    }
+
+    a:nth-child(1):hover~.move, .activet1~.move {
+      border-color: #0082de;
+      left: 15px;
+    }
+
+    li:nth-child(2):hover~.move, .activet2~.move {
+      border-color: #0082de;
+      left: 100px;
+    }
+
+    a:nth-child(3):hover~.move, .activet3~.move {
+      border-color: #0082de;
+      left: 200px;
+    }
+
+    a:nth-child(4):hover~.move, .activet4~.move {
+      border-color: #0082de;
+      left: 300px;
+    }
+
+    a:nth-child(5):hover~.move, .activet5~.move {
+      border-color: #0082de;
+      left: 402px;
+    }
+
+    a:nth-child(6):hover~.move, .activet6~.move {
+      border-color: #0082de;
+      left: 504px;
+    }
+
+    .move {
+      height: 3px;
+      width: 16px;
+      border-top: 3px solid #FFF;
+      position: absolute;
+      left: 15px;
+      top: 60px;
+      transition: left .2s ease-in-out 0s;
+    }
+
+    .menuItme {
+      a {
+        color: #FFF;
+      }
+      &:hover {
+        background-color: transparent;
+
+        a {
+          color: #024CB2;
+        }
+
+        .menuMenu {
+          display: flex;
+          background-color: #024CB2;
+        }
+      }
+
+      .menuMenu {
+        display: none;
+        padding: 0;
+        margin: 0 -18px;
+        flex-direction: column;
+
+        li {
+          width: 100%;
+          color: #FFF;
+          margin: 8px 0;
+          height: 30px;
+          text-align: center;
+          line-height: 30px;
+          padding: 0 5px;
+
+          &:hover {
+            background-color: #FFF;
+            color: #15A6F3;
+          }
+        }
+      }
+    }
+  }
+
+  &:hover .move {
+    border-color: #0082de;
+    position: absolute;
+    z-index: -1;
+  }
+
+}
+
+.top {
+  position: fixed;
+
+  .move {
+    border-color: #0082de !important;
+  }
+}

@@ -1,0 +1,140 @@
+.boxContent {
+  /*border-top: 5px solid #dcdddd;*/
+  position: relative;
+  height: 350px;
+
+  .oneOfBox {
+    border-top: 1px solid #dcdddd;
+    border-left: 1px solid #dcdddd;
+    border-bottom: 1px solid #dcdddd;
+    box-sizing: border-box;
+    height: 350px;
+    position: absolute;
+    top: 0;
+    z-index: 0;
+    text-align: center;
+    background-color: #fff;
+    width: 25%;
+
+    &:hover {
+      z-index: 2;
+      width: 29%;
+      top: -28px;
+      height: 400px;
+      transition: all .2s linear, z-index 0s 0s;
+    }
+
+    &.oneOfBox1 {
+      left: 0;
+    }
+
+    &.oneOfBox2 {
+      left: 25%;
+    }
+
+    &.oneOfBox3 {
+      left: 50%;
+    }
+
+    &.oneOfBox4 {
+      left: 75%;
+    }
+
+    &:hover.oneOfBox1 {
+      background: #219ed9;
+      left: -2%;
+    }
+    
+    &:hover.oneOfBox2 {
+      background: #219ed9;
+      left: 23%;
+    }
+    
+    &:hover.oneOfBox3 {
+      background: #219ed9;
+      left: 48%;
+    }
+    
+    &:hover.oneOfBox4 {
+      background: #219ed9;
+      left: 73%;
+    }
+
+    .oneOfBoxTitle {
+      font-size: 18px;
+      margin-top: 32px;
+    }
+
+    .hoverBefore {
+      color: #3e3a39;
+    }
+
+    .hoverAfter {
+      display: none;
+      color: #fff;
+
+      .hoverExp {
+        margin: 0 auto;
+        margin-top: 25px;
+        width: 250px;
+        text-align: justify;
+        line-height: 22px;
+      }
+    }
+
+    &:hover .hoverAfter {
+      display: block;
+    }
+
+    &:hover .hoverBefore {
+      display: none;
+    }
+
+    .imgWrap {
+      margin-top: 70px;
+      height: 65px;
+
+      &>img {
+        height: 100%;
+      }
+    }
+    
+    .explain {
+      height: 23px;
+      line-height: 23px;
+      color: #8a8a8a;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .detailsWrap {
+      position: absolute;
+      bottom: 45px;
+      width: 100%;
+
+      &>a {
+        color: #fff;
+        width: 160px;
+        height: 32px;
+        display: block;
+        line-height: 32px;
+        border: 1px solid #fff;
+        background-color: transparent;
+        border-radius: 2px;
+        cursor: pointer;
+        font-size: 14px;
+        margin: 0 auto;
+
+        &:hover {
+          background-color: #fff;
+          color: #219ed9;
+        }
+      }
+    }
+
+    .mt15 {
+      margin-top: 15px;
+    }
+  }
+  
+}

@@ -1,5 +1,9 @@
 {
   "extends": [
     "tslint-midway-contrib"
-  ]
+  ],
+  "rules": {
+    "semicolon": false,
+    "indent":[false, "tabs", 2]
+  }
 }

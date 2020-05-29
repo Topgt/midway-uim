@@ -1,0 +1,64 @@
+.item {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+  overflow: hidden;
+  font-size: 16px;
+  position: relative;
+
+  img {
+    display: block;
+    width: 200px;
+    height: 127px;
+  }
+
+  &:nth-child(2n) {
+    background-color: #F1F9FE;
+
+    img {
+      margin-left: 75px;
+      position: absolute;
+      left: calc(100% - 180px);
+      transition: left 1s;
+    }
+
+    img[move] {
+      left: 58%;
+    }
+
+    p {
+      text-align: left;
+    }
+    
+  }
+
+  &:nth-child(2n-1) {
+    img {
+      margin-right: 75px;
+      position: absolute;
+      right: 90%;
+      transition: right 1s;
+    }
+
+    img[move] {
+      right: 58%;
+    }
+
+    p {
+      text-align: right;
+    }
+  }
+
+  .des {
+    width: 523px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #333;
+
+    .desTitle {
+      margin-bottom: 20px;
+      color: #0D74D6;
+    }
+  }
+}

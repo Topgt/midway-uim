@@ -1,0 +1,9 @@
+{
+  "name": "egg-mysql",
+  "eggPlugin": {
+    "name": "mysql",
+    "dependencies": [],
+    "optionalDependencies": [],
+    "env": [ "local", "test", "unittest", "prod" ]
+  }
+}

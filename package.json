@@ -4,11 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo test"
+    "test": "echo test",
+    "preinstall": "cd client && npm install",
+    "postinstall": "cd service && npm install",
+    "prebuild": "rm -rf dist",
+    "build": "cd service && npm run build",
+    "postbuild": "cd client && npm run build",
+    "pack": "node ./bin/pack.js"
   },
   "keywords": [
     "midway"
   ],
   "author": "lambda",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "shelljs": "^0.8.3"
+  },
+  "devDependencies": {
+    "@types/highlight.js": "^9.12.3"
+  }
 }
