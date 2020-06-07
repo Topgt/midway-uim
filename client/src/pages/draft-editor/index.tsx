@@ -13,6 +13,7 @@ const Index: React.FC<{}> = () => {
   const stackRef = React.useRef(new Stack<EditorState>(100))
 
   const toolBarProps:IToolBar = {
+    editorState,
     event: eventRef.current,
   }
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
+import _ from 'lodash'
 import Select from './component/select'
 import ColorPanel from './component/color-panel'
 import {IToolBar} from './index.d'
@@ -7,13 +8,21 @@ import style from './style.less'
 import {toolbarArea, Iarea} from './config'
 
 const ToolBar: React.FC<IToolBar> = (props) => {
-  const { event } = props
+  const { event, editorState } = props
+
+  const inlineStyles = editorState.getCurrentInlineStyle().toJS()
+  const selection = editorState.getSelection();
+  const blockType = editorState
+    .getCurrentContent()
+    .getBlockForKey(selection.getStartKey())
+    .getType();
 
   const renderBtn: (i: Iarea['areas'][0], a: string, k: number | string, disabled?: boolean) => React.ReactNode = (inlineStyle, action, key, disabled) => (
     <button
       key={key}
       disabled={disabled}
       className={classnames({tooltip: !disabled})}
+      active={inlineStyles.includes(inlineStyle.value) ? 'true' : 'false'}
       tooltip={inlineStyle.lable}
       onMouseDown={e => {
         e.preventDefault()
@@ -27,8 +36,17 @@ const ToolBar: React.FC<IToolBar> = (props) => {
     </button>
   )
   const renderToolbarArea: (t: Iarea, idx: number | string)=>React.ReactNode = (area, key) => {
-    const disabled = false
+    let disabled = false
     const {action, type, areas, initValue, lable, fontIcon} = area
+    let currentValue = undefined
+    if (lable === '文本和标题') {
+      currentValue = blockType
+    } if (lable === '字号') {
+      disabled = ['header-one', 'header-two', 'header-three', 'header-four', 'header-five', 'header-six'].includes(blockType)
+      currentValue = _.findLast(inlineStyles, style => /^\d{1,2}px$/.test(style))
+      // console.log(currentValue, initValue)
+    }
+
     switch(type) {
       case 'bnt':
         return areas.map((ilns, idx) => renderBtn(ilns, action, `${key}-${idx}`))
@@ -40,6 +58,7 @@ const ToolBar: React.FC<IToolBar> = (props) => {
             key={key}
             onChange={(style: string) => event.fire(`${action}`, style)}
             initValue={initValue}
+            value={currentValue}
             tooltip={lable}
           >
             {

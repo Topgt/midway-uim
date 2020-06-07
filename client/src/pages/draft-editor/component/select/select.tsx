@@ -6,13 +6,14 @@ import styl from './style.less'
 import {ISelect, ISelectOption, IOptionProps} from './index.d'
 
 const Select: ISelect<ISelectOption> = props => {
-  let { disabled, className, tooltip, children, initValue, lable, onChange } = props
+  let { disabled, className, tooltip, children, initValue, value, lable, onChange } = props
   if (!React.Children.count(children)) {
     return <div />
   }
   let initSelect = ({} as {props: IOptionProps}) 
-  if (initValue) {
-    initSelect = (children as any).find(({props}: any) => props.value === initValue) || {}
+  const currentValue = value || initValue
+  if (currentValue) {
+    initSelect = (children as any).find(({props}: any) => props.value === currentValue) || {}
   }
   const [visible, setVisible] = React.useState(false)
   const [selectOption, changeSelect] = React.useState((initSelect.props || {}))
@@ -45,6 +46,13 @@ const Select: ISelect<ISelectOption> = props => {
     }
   }, [])
 
+  React.useEffect(()=> {
+    if (value) {
+      initSelect = (children as any).find(({props}: any) => props.value === value)
+      initSelect && changeSelect(initSelect.props)
+    }
+  })
+
   const contextValue = {
     v: selectOption.value || initValue,
     setV: (v: string) => {
@@ -53,7 +61,6 @@ const Select: ISelect<ISelectOption> = props => {
       typeof onChange === 'function' && onChange(v)
     }
   }
-
   return (
     <div
       ref={ref => selectRef.current = ref}
@@ -69,7 +76,7 @@ const Select: ISelect<ISelectOption> = props => {
       }}
       >
         <span className={styl.lake}>
-          {lable || selectOption.lable || selectOption.value || initValue}
+          {lable || selectOption.lable || selectOption.value || currentValue}
           <i />
         </span>
       </div>

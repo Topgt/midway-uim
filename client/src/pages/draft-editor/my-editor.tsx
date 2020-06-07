@@ -30,6 +30,7 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
   React.useEffect(() => {
     event.on('toggleInlineStyle', style => {
       const newState = RichUtils.toggleInlineStyle(stateRef.current, (style as string))
+      // console.log(newState.toJS())
       setEditorState(newState)
       return newState
     })
@@ -104,14 +105,16 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
     <div
       style={{
         border: '1px solid #ccc',
-        height: 'calc(100% - 35px)',
+        // height: 'calc(100% - 35px)',
         padding: '10px 20px'
       }}
-      onClick={() => {
+      onClick={(e) => {
+      // onMouseDown={(e) => {
         // activeElement 属性返回文档中当前获得焦点的元素。
+        // e.preventDefault()
         const contentEditable = (document.activeElement as any).contentEditable
         if(contentEditable !== 'true') {
-          setEditorState(moveSelectionToEnd(editorState))
+          // setEditorState(moveSelectionToEnd(editorState))
           setTimeout(() => {
             editorRef.current && editorRef.current.focus()
           })

@@ -16,6 +16,7 @@ export interface ISelectOption {
   className?: string
   disabled?: boolean
   initValue?: string
+  value?: string
   tooltip?: string
   lable?: string | React.ReactNode
   onChange?: (v: string) => void

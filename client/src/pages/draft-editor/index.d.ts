@@ -5,6 +5,7 @@ declare module 'react' {
   interface HTMLAttributes<T> extends DOMAttributes<T> {
     tabIndex?: number
     tooltip?: string
+    active?: string
     disabled?: boolean
   }
 }
@@ -21,6 +22,7 @@ interface IMyEditor {
 }
 
 interface IToolBar {
+  editorState: EditorState
   event: Events
 }
 
