@@ -2,7 +2,7 @@ import React from 'react'
 import {EditorState, RichUtils} from 'draft-js'
 import {Events, Stack} from '../../utils/index'
 import MyEditor from './my-editor'
-import ToolBar from './tool-bar'
+import ToolBar from './component/tool-bar'
 import {IMyEditor, IToolBar, IeditoRef} from './index.d'
 
 const Index: React.FC<{}> = () => {

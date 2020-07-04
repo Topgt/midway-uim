@@ -1,11 +1,11 @@
 import React from 'react'
 import classnames from 'classnames'
 import _ from 'lodash'
-import Select from './component/select'
-import ColorPanel from './component/color-panel'
+import Select from '../select'
+import ColorPanel from '../color-panel'
 import {IToolBar} from './index.d'
 import style from './style.less'
-import {toolbarArea, Iarea} from './config'
+import {toolbarArea, Iarea} from '../../config'
 
 const ToolBar: React.FC<IToolBar> = (props) => {
   const { event, editorState } = props

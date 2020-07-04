@@ -11,6 +11,7 @@ import {
 import {Map} from 'immutable'
 import {customStyleMap, blockRenderMap} from './config'
 import {IMyEditor, IeditoRef} from './index.d'
+import './style.less'
 
 const MyEditor: React.FC<IMyEditor> = (props) => {
   const {ederiotRef, editorState, setEditorState, onChange, event, stack} = props
