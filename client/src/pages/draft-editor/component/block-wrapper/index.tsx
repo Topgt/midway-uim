@@ -39,11 +39,13 @@ const BlockWrapper = (props: any) => {
               const contentBlock = contentState.getBlockForKey(key)
 
               const newBlock = removeInlineStyle(block, /^\d{1,2}px$/) // 正则匹配合适的样式进行删除
-              const newContentBlock = removeInlineStyle(contentBlock, /^\d{1,2}px$/)
+              // const newContentBlock = removeInlineStyle(contentBlock, /^\d{1,2}px$/)
 
               const blockMap = contentState.get('blockMap')
-              const nweBlockMap = blockMap.set(key, newContentBlock)
-              return React.cloneElement(child, {block: newBlock, contentState: contentState.set('blockMap', nweBlockMap)})
+              // const nweBlockMap = blockMap.set(key, newContentBlock)
+              return React.cloneElement(child, {block: newBlock})
+              // return React.cloneElement(child, {block: newBlock, contentState: contentState.set('blockMap', nweBlockMap)})
+
             })
             return React.cloneElement(target, { style: style, key: i, children:  newChildren})
           }
