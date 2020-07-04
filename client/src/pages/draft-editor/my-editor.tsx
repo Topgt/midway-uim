@@ -52,15 +52,13 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
         // setEditorState(EditorState.redo(stateRef.current))
       }
     })
-    event.on('addBlockType', blockType => {
+    event.on('addBlockType', (blockType: any) => {
       const currentContentState = stateRef.current.getCurrentContent()
       const selectState = stateRef.current.getSelection()
-      const key = selectState.getStartKey()
-      const data = currentContentState.getBlockForKey(key).getData()
-      const style = Map(JSON.parse((blockType as any)))
-      style.merge(data.toJS())
-      const contentState = Modifier.setBlockData(currentContentState, selectState, style.toJS())
-      const state = EditorState.createWithContent(contentState)
+      const blockData = Map(JSON.parse(blockType))
+      const contentState = Modifier.mergeBlockData(currentContentState, selectState, blockData)
+      let state = EditorState.createWithContent(contentState)
+      state = EditorState.acceptSelection(state, selectState)
       setEditorState(state)
     })
 

@@ -33,15 +33,15 @@ const BlockWrapper = (props: any) => {
           if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(target.type) ) {
             // 去除 字体大小的样式
             const newChildren = React.Children.map(targetChildren, (child, i) => {
-              const contentState = _.get(child, 'props.contentState', {})
-              const key = _.get(child, 'key', '')
+              // const contentState = _.get(child, 'props.contentState', {})
+              // const key = _.get(child, 'key', '')
               const block = _.get(child, 'props.block', {})
-              const contentBlock = contentState.getBlockForKey(key)
+              // const contentBlock = contentState.getBlockForKey(key)
 
               const newBlock = removeInlineStyle(block, /^\d{1,2}px$/) // 正则匹配合适的样式进行删除
               // const newContentBlock = removeInlineStyle(contentBlock, /^\d{1,2}px$/)
 
-              const blockMap = contentState.get('blockMap')
+              // const blockMap = contentState.get('blockMap')
               // const nweBlockMap = blockMap.set(key, newContentBlock)
               return React.cloneElement(child, {block: newBlock})
               // return React.cloneElement(child, {block: newBlock, contentState: contentState.set('blockMap', nweBlockMap)})
