@@ -1,7 +1,7 @@
 import React from 'react'
 import classnames from 'classnames'
 import Select from '../select'
-import {IareasValue} from '../../config'
+import {IareasValue} from '../../config/tool-bar-config'
 import style from './style.less'
 
 interface IcolorPanel{

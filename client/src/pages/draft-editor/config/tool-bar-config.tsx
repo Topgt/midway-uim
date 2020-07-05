@@ -1,7 +1,7 @@
 import React from 'react'
 import Immutable from 'immutable'
 import _ from 'lodash'
-import BlockWrapper from './component/block-wrapper'
+import BlockWrapper from '../component/block-wrapper'
 
 
 export type IareasValue = {value: string | string[], fontIcon?: string, lable?: string}[]
@@ -177,8 +177,8 @@ export const toolbarArea: ItoolbarArea = [
     lable: '对齐方式',
     areas: [
       {lable: '左对齐', fontIcon: '&#xe6cf;', value: JSON.stringify({textAlign: 'left'})},
-      {lable: '右对齐', fontIcon: '&#xe6cd;', value: JSON.stringify({textAlign: 'right'})},
       {lable: '居中对齐', fontIcon: '&#xe73e;', value: JSON.stringify({textAlign: 'center'})},
+      {lable: '右对齐', fontIcon: '&#xe6cd;', value: JSON.stringify({textAlign: 'right'})},
     ]
   }, {
     action: 'toggleInlineStyle',

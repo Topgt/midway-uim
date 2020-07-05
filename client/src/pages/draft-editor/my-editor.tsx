@@ -9,7 +9,7 @@ import {
   DefaultDraftBlockRenderMap
 } from 'draft-js'
 import {Map} from 'immutable'
-import {customStyleMap, blockRenderMap} from './config'
+import {customStyleMap, blockRenderMap} from './config/tool-bar-config'
 import {IMyEditor, IeditoRef} from './index.d'
 import './style.less'
 

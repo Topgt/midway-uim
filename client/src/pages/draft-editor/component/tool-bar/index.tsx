@@ -5,7 +5,7 @@ import Select from '../select'
 import ColorPanel from '../color-panel'
 import {IToolBar} from './index.d'
 import style from './style.less'
-import {toolbarArea, Iarea} from '../../config'
+import {toolbarArea, Iarea} from '../../config/tool-bar-config'
 
 const ToolBar: React.FC<IToolBar> = (props) => {
   const { event, editorState } = props
