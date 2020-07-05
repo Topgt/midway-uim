@@ -8,10 +8,45 @@ import {
   Modifier,
   DefaultDraftBlockRenderMap
 } from 'draft-js'
-import {Map} from 'immutable'
+import {Map, OrderedSet} from 'immutable'
 import {customStyleMap, blockRenderMap} from './config/tool-bar-config'
 import {IMyEditor, IeditoRef} from './index.d'
 import './style.less'
+
+const moveSelectionToEnd = (editorState: EditorState) => {
+  const content = editorState.getCurrentContent()
+  const blockMap = content.getBlockMap()
+  const key = blockMap.last().getKey()
+  const length = blockMap.last().getLength()
+  const selection = new SelectionState({
+    anchorKey: key,
+    anchorOffset: length,
+    focusKey: key,
+    focusOffset: length,
+  })
+  return EditorState.acceptSelection(editorState, selection)
+}
+
+const insertText = (editorState: EditorState, text='‎',  style: string) => {
+  const contentState = editorState.getCurrentContent()
+  const selectState = editorState.getSelection()
+  const draftInlineStyle = OrderedSet<string>([style])
+
+  const newContentState = Modifier.insertText(contentState, selectState, text, draftInlineStyle)
+  let nextState = EditorState.createWithContent(newContentState)
+
+  const key = selectState.getAnchorKey()
+  const length = selectState.getFocusOffset() + text.length
+  const nextSelectState = new SelectionState({
+    anchorKey: key,
+    anchorOffset: length,
+    focusKey: key,
+    focusOffset: length,
+  })
+  nextState = EditorState.acceptSelection(nextState, nextSelectState)
+
+  return nextState
+}
 
 const MyEditor: React.FC<IMyEditor> = (props) => {
   const {ederiotRef, editorState, setEditorState, onChange, event, stack} = props
@@ -30,8 +65,18 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
   // 注册事件监听
   React.useEffect(() => {
     event.on('toggleInlineStyle', style => {
+      const selectState = stateRef.current.getSelection()
+      // 如何没有选择文字就设置样式，先插入一个看不见的字符应用该样式。这是为了解决先设置样式再输入中文样式会丢失的问题
+      if ((selectState.getEndOffset()-selectState.getStartOffset()) === 0) {
+        // 注意，这并不少一个空字符串，这个字符串中包含了一个在html中不显示的&lrm;
+        const state = insertText(stateRef.current, '‎',  style)
+        setEditorState(state)
+        setTimeout(() => {
+          editorRef.current && editorRef.current.focus()
+        })
+        return state
+      }
       const newState = RichUtils.toggleInlineStyle(stateRef.current, (style as string))
-      // console.log(newState.toJS())
       setEditorState(newState)
       return newState
     })
@@ -46,11 +91,9 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
       if ((action as any)  === 'undo') {
         const state = stack.undo()
         state && setEditorState((state as EditorState))
-        // setEditorState(EditorState.undo(stateRef.current))
       } else if ((action as any)  === 'redo') {
         const state = stack.redo()
         state && setEditorState((state as EditorState))
-        // setEditorState(EditorState.redo(stateRef.current))
       }
     })
     event.on('addBlockType', (blockType: any) => {
@@ -62,7 +105,6 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
       state = EditorState.acceptSelection(state, selectState)
       setEditorState(state)
     })
-
     event.fireFinish((eventName:string, params:any[], result:EditorState) => {
       if (!['changeEditorState'].includes(eventName) && result) {
         stack.push(result)
@@ -73,7 +115,6 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
   const change = (state: EditorState) => {
     const oldText = editorState.getCurrentContent().getPlainText()        
     const newText = state.getCurrentContent().getPlainText()
-    // console.log(convertToRaw(editorState.getCurrentContent()))
     setEditorState(state)
     if(newText !== oldText){       
       typeof onChange === 'function' && onChange(state)
@@ -86,20 +127,6 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
     return ''
   }
 
-  const moveSelectionToEnd = (editorState: EditorState) => {
-    const content = editorState.getCurrentContent()
-    const blockMap = content.getBlockMap()
-    const key = blockMap.last().getKey()
-    const length = blockMap.last().getLength()
-    const selection = new SelectionState({
-      anchorKey: key,
-      anchorOffset: length,
-      focusKey: key,
-      focusOffset: length,
-    })
-    return EditorState.acceptSelection(editorState, selection)
-  }
-
   return (
     <div
       style={{
@@ -108,7 +135,6 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
         padding: '10px 20px'
       }}
       onClick={(e) => {
-      // onMouseDown={(e) => {
         // activeElement 属性返回文档中当前获得焦点的元素。
         // e.preventDefault()
         const contentEditable = (document.activeElement as any).contentEditable
