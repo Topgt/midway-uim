@@ -3,7 +3,6 @@ import Immutable from 'immutable'
 import _ from 'lodash'
 import BlockWrapper from '../component/block-wrapper'
 
-
 export type IareasValue = {value: string | string[], fontIcon?: string, lable?: string}[]
 export interface Iarea {
   action: string

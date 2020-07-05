@@ -51,10 +51,10 @@ const Select: ISelect<ISelectOption> = props => {
       initSelect = (children as any).find(({props}: any) => props.value === value)
       initSelect && changeSelect(initSelect.props)
     }
-  })
+  }, [value])
 
   const contextValue = {
-    v: selectOption.value || initValue,
+    v: currentValue || selectOption.value,
     setV: (v: string) => {
       const selected = (children as any).find(({props}: any) => props.value === v) || {}
       changeSelect(selected.props || {value: v})

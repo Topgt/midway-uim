@@ -11,11 +11,15 @@ interface IcolorPanel{
   lable?: string
   fontIcon?: string
   initValue?: string
+  value?: string
 }
 
 const ColorPanel: React.FC<IcolorPanel> = (props) => {
-  const {disabled, change, areas, lable, fontIcon, initValue='#000000'} = props
-  const [selectColor, setColor] = React.useState(initValue)
+  const {disabled, change, areas, lable, fontIcon, value, initValue='#000000'} = props
+  const currentValue = value || initValue
+  const [selectColor, setColor] = React.useState(currentValue)
+  React.useEffect(() => setColor(currentValue), [currentValue])
+
   const colorLable = (
     <span className={style.lable}>
       <span className="iconfont" dangerouslySetInnerHTML={{__html: `${fontIcon}`}} />
@@ -26,6 +30,7 @@ const ColorPanel: React.FC<IcolorPanel> = (props) => {
       disabled={disabled}
       className={classnames({tooltip: !disabled})}
       initValue={initValue}
+      value={currentValue}
       onChange={change}
       tooltip={lable}
       lable={colorLable}

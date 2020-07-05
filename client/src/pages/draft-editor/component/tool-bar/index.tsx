@@ -16,6 +16,11 @@ const ToolBar: React.FC<IToolBar> = (props) => {
     .getCurrentContent()
     .getBlockForKey(selection.getStartKey())
     .getType();
+  const blockData = editorState
+    .getCurrentContent()
+    .getBlockForKey(selection.getStartKey())
+    .getData()
+    .toJS();
 
   const renderBtn: (i: Iarea['areas'][0], a: string, k: number | string, disabled?: boolean) => React.ReactNode = (inlineStyle, action, key, disabled) => (
     <button
@@ -41,10 +46,22 @@ const ToolBar: React.FC<IToolBar> = (props) => {
     let currentValue = undefined
     if (lable === '文本和标题') {
       currentValue = blockType
-    } if (lable === '字号') {
+    } else if (lable === '字号') {
       disabled = ['header-one', 'header-two', 'header-three', 'header-four', 'header-five', 'header-six'].includes(blockType)
-      currentValue = _.findLast(inlineStyles, style => /^\d{1,2}px$/.test(style))
-      // console.log(currentValue, initValue)
+      currentValue = _.findLast(inlineStyles, style => /^\d{1,2}px$/.test(style)) || initValue
+    } else if (lable === '对齐方式') {
+      try {
+        const textAlign = _.get(blockData, 'textAlign')
+        currentValue = textAlign ? JSON.stringify({textAlign}) : initValue
+      } catch(e){}
+    } else if (lable === '字体颜色') {
+      const colorValue = _.findLast(inlineStyles, style => /^color-#\w{6}$/.test(style)) || ''
+      const color = colorValue.match(/^color-(#\w{6})$/)
+      currentValue = color ? color[1] : initValue
+    } else if (lable === '背景色') {
+      const colorValue = _.findLast(inlineStyles, style => /^background-#\w{6}$/.test(style)) || ''
+      const color = colorValue.match(/^background-(#\w{6})$/)
+      currentValue = color ? color[1] : initValue
     }
 
     switch(type) {
@@ -101,6 +118,7 @@ const ToolBar: React.FC<IToolBar> = (props) => {
             key={key}
             disabled={disabled}
             initValue={initValue}
+            value={currentValue}
             change={(s) => event.fire(`${action}`, `${type}-${s}`)}
             areas={areas}
             lable={lable}
