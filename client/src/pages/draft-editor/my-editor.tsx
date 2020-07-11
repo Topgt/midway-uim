@@ -27,11 +27,14 @@ const moveSelectionToEnd = (editorState: EditorState) => {
   return EditorState.acceptSelection(editorState, selection)
 }
 
-const insertText = (editorState: EditorState, text='‎',  style: string) => {
+const insertText = (editorState: EditorState, text='‎',  styles: string[]) => {
+  const inlineStyles:string[] = editorState.getCurrentInlineStyle().toJS()
   const contentState = editorState.getCurrentContent()
   const selectState = editorState.getSelection()
-  const draftInlineStyle = OrderedSet<string>([style])
-
+  let draftInlineStyle = OrderedSet<string>(inlineStyles)
+  styles.forEach(
+    ss => draftInlineStyle = draftInlineStyle.has(ss) ? draftInlineStyle.delete(ss) : draftInlineStyle.add(ss)
+  )
   const newContentState = Modifier.insertText(contentState, selectState, text, draftInlineStyle)
   let nextState = EditorState.createWithContent(newContentState)
 
@@ -69,7 +72,7 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
       // 如何没有选择文字就设置样式，先插入一个看不见的字符应用该样式。这是为了解决先设置样式再输入中文样式会丢失的问题
       if ((selectState.getEndOffset()-selectState.getStartOffset()) === 0) {
         // 注意，这并不少一个空字符串，这个字符串中包含了一个在html中不显示的&lrm;
-        const state = insertText(stateRef.current, '‎',  style)
+        const state = insertText(stateRef.current, '‎',  [style])
         setEditorState(state)
         setTimeout(() => {
           editorRef.current && editorRef.current.focus()
