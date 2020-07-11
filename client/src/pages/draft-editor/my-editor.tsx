@@ -6,7 +6,8 @@ import {
   RichUtils, 
   ContentBlock,
   Modifier,
-  DefaultDraftBlockRenderMap
+  DefaultDraftBlockRenderMap,
+  convertToRaw
 } from 'draft-js'
 import {Map, OrderedSet} from 'immutable'
 import {customStyleMap, blockRenderMap} from './config/tool-bar-config'
@@ -88,15 +89,19 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
       setEditorState(newState)
       return newState
     })
-    event.on('changeEditorState', action => {
+    event.on('changeEditorState', (action: string) => {
       // 原生的 撤销和重做栈不完整，会有操作不入栈的情况，
       // 分别对对内容改变，和变更样式的经过入栈，自己管理撤销和重做栈
-      if ((action as any)  === 'undo') {
+      if (action === 'undo') {
         const state = stack.undo()
         state && setEditorState((state as EditorState))
-      } else if ((action as any)  === 'redo') {
+      } else if (action === 'redo') {
         const state = stack.redo()
         state && setEditorState((state as EditorState))
+      } else if (action === 'seve') {
+        const contentState = stateRef.current.getCurrentContent()
+        const json = convertToRaw(contentState)
+        // console.log(json)
       }
     })
     event.on('addBlockType', (blockType: any) => {

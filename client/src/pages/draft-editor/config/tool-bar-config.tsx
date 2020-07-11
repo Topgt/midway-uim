@@ -125,7 +125,7 @@ export const toolbarArea: ItoolbarArea = [
     action: 'changeEditorState',
     type: 'bnt',
     areas: [
-      {lable: '保存', fontIcon: '&#xe6fe;', value: 'UNDERLINE'},
+      {lable: '保存', fontIcon: '&#xe6fe;', value: 'seve'},
       {lable: '撤销', fontIcon: '&#xe629;', value: 'undo'},
       {lable: '重做', fontIcon: '&#xe62a;', value: 'redo'}
     ]
