@@ -13,8 +13,7 @@ import classNames from 'classnames'
 import {customStyleMap, blockRenderMap} from './config/tool-bar-config'
 import {IMyEditor, IeditoRef} from './index.d'
 import {insertText, removeInlineStyle, applyInlineStyle} from '../../utils/index'
-import './style.less'
-
+import style from './style.less'
 
 const MyEditor: React.FC<IMyEditor> = (props) => {
   const {ederiotRef, editorState, setEditorState, onChange, event, stack} = props
@@ -116,12 +115,7 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
 
   return (
     <div
-      className={classNames({formatBrush: formatBrush})}
-      style={{
-        border: '1px solid #ccc',
-        // height: 'calc(100% - 35px)',
-        padding: '10px 20px',
-      }}
+      className={classNames({formatBrush: formatBrush}, style.editor)}
       onClick={(e) => {
         // activeElement 属性返回文档中当前获得焦点的元素。
         // e.preventDefault()

@@ -4,6 +4,7 @@ import {Events, Stack} from '../../utils/index'
 import MyEditor from './my-editor'
 import ToolBar from './component/tool-bar'
 import {IMyEditor, IToolBar, IeditoRef} from './index.d'
+import style from './style.less'
 
 const Index: React.FC<{}> = () => {
   const state = EditorState.createEmpty()
@@ -27,10 +28,13 @@ const Index: React.FC<{}> = () => {
   }
   return (
     <div
-      style={{padding: '0 60px', height: '100%'}}
+      className={style.page}
     >
       <ToolBar {...toolBarProps} />
-      <MyEditor {...editorProps}/>
+      <div className={style.main}>
+        <MyEditor {...editorProps}/>
+      </div>
+      
     </div>)
 }
 
