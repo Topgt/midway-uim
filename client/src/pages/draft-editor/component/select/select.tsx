@@ -6,7 +6,7 @@ import styl from './style.less'
 import {ISelect, ISelectOption, IOptionProps} from './index.d'
 
 const Select: ISelect<ISelectOption> = props => {
-  let { disabled, className, tooltip, children, initValue, value, lable, onChange } = props
+  let { disabled, className, tooltip, children, initValue, value, lable, onChange, automatic=true } = props
   if (!React.Children.count(children)) {
     return <div />
   }
@@ -59,7 +59,8 @@ const Select: ISelect<ISelectOption> = props => {
       const selected = (children as any).find(({props}: any) => props.value === v) || {}
       changeSelect(selected.props || {value: v})
       typeof onChange === 'function' && onChange(v)
-    }
+      automatic && setVisible(false)
+    },
   }
   return (
     <div

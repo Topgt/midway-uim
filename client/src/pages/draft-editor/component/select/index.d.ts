@@ -19,5 +19,6 @@ export interface ISelectOption {
   value?: string
   tooltip?: string
   lable?: string | React.ReactNode
+  automatic?: boolean
   onChange?: (v: string) => void
 }
