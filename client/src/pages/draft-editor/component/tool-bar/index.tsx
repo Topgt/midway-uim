@@ -8,7 +8,7 @@ import style from './style.less'
 import {toolbarArea, Iarea} from '../../config/tool-bar-config'
 
 const ToolBar: React.FC<IToolBar> = (props) => {
-  const { event, editorState } = props
+  const { event, editorState, stack } = props
 
   const inlineStyles = editorState.getCurrentInlineStyle().toJS()
   const selection = editorState.getSelection();
@@ -22,24 +22,36 @@ const ToolBar: React.FC<IToolBar> = (props) => {
     .getData()
     .toJS();
 
-  const renderBtn: (i: Iarea['areas'][0], a: string, k: number | string, disabled?: boolean) => React.ReactNode = (inlineStyle, action, key, disabled) => (
-    <button
-      key={key}
-      disabled={disabled}
-      className={classnames({tooltip: !disabled})}
-      active={inlineStyles.includes(inlineStyle.value) ? 'true' : 'false'}
-      tooltip={inlineStyle.lable}
-      onMouseDown={e => {
-        e.preventDefault()
-        event.fire(`${action}`, inlineStyle.value)
-      }}
-    >
-      <div 
-        className="iconfont"
-        dangerouslySetInnerHTML={{__html: `${inlineStyle.fontIcon}`}} 
-      />
-    </button>
-  )
+  const renderBtn: (i: Iarea['areas'][0], a: string, k: number | string) => React.ReactNode = (area, action, key) =>{
+    const {value, lable} = area
+    let active = inlineStyles.includes(value) ? 'true' : 'false'
+    let disabled: boolean = false
+    if ('撤销' === lable) {
+      disabled = stack.isBottom()
+      active = `${!disabled}`
+    } else if ('重做' === lable) {
+      disabled = stack.isTop()
+      active = `${!disabled}`
+    }
+    return (
+      <button
+        key={key}
+        disabled={disabled}
+        className={classnames({tooltip: !disabled})}
+        active={active}
+        tooltip={lable}
+        onMouseDown={e => {
+          e.preventDefault()
+          event.fire(`${action}`, value)
+        }}
+      >
+        <div 
+          className="iconfont"
+          dangerouslySetInnerHTML={{__html: `${area.fontIcon}`}} 
+        />
+      </button>
+    )
+  } 
   const renderToolbarArea: (t: Iarea, idx: number | string)=>React.ReactNode = (area, key) => {
     let disabled = false
     const {action, type, areas, initValue, lable, fontIcon} = area
@@ -66,7 +78,7 @@ const ToolBar: React.FC<IToolBar> = (props) => {
 
     switch(type) {
       case 'bnt':
-        return areas.map((ilns, idx) => renderBtn(ilns, action, `${key}-${idx}`))
+        return areas.map((itemArea, idx) => renderBtn(itemArea, action, `${key}-${idx}`))
       case 'select':
         return (
           <Select 

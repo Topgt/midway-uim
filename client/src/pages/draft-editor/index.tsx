@@ -10,10 +10,11 @@ const Index: React.FC<{}> = () => {
   const [editorState, setEditorState] = React.useState(state)
   const editorRef = React.useRef((null as IeditoRef))
   const eventRef = React.useRef(new Events())
-  const stackRef = React.useRef(new Stack<EditorState>(100))
+  const stackRef = React.useRef(new Stack<EditorState>(100, editorState))
 
   const toolBarProps:IToolBar = {
     editorState,
+    stack: stackRef.current,
     event: eventRef.current,
   }
 

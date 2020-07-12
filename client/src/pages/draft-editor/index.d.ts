@@ -23,6 +23,7 @@ interface IMyEditor {
 
 interface IToolBar {
   editorState: EditorState
+  stack: Stack<EditorState>
   event: Events
 }
 

@@ -133,8 +133,8 @@ export const toolbarArea: ItoolbarArea = [
     action: 'format',
     type: 'bnt',
     areas: [
-      {lable: '格式刷', fontIcon: '&#xe617;', value: 'STRIKETHROUGH'},
-      {lable: '清除格式', fontIcon: '&#xe65b;', value: 'STRIKETHROUGH'},
+      {lable: '格式刷', fontIcon: '&#xe617;', value: '12'},
+      {lable: '清除格式', fontIcon: '&#xe65b;', value: '23'},
     ]
   }, [{
     action: 'toggleBlockType',
@@ -187,7 +187,7 @@ export const toolbarArea: ItoolbarArea = [
       {lable: '斜体', fontIcon: '&#xe700;', value: 'ITALIC'},
       {lable: '删除线', fontIcon: '&#xe664;', value: 'STRIKETHROUGH'},
       {lable: '下划线', fontIcon: '&#xe701;', value: 'UNDERLINE'},
-      {lable: '更多文本样式', fontIcon: '&#xe632;', value: 'UNDERLINE'},
+      {lable: '更多文本样式', fontIcon: '&#xe632;', value: 'dd'},
     ]
   }, [{
     action: 'toggleInlineStyle',

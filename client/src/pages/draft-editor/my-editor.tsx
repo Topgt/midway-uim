@@ -61,11 +61,6 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
     stateRef.current = editorState
   }, [editorState])
 
-  React.useEffect(() => {
-    // 初始化栈的editorState
-    stack.push(editorState)
-  }, [])
-
   // 注册事件监听
   React.useEffect(() => {
     event.on('toggleInlineStyle', style => {

@@ -1,7 +1,8 @@
 import { EditorState } from 'draft-js'
-import {Events} from '../../../../utils/index'
+import {Events, Stack} from '../../../../utils/index'
 
 interface IToolBar {
+  stack: Stack<EditorState>
   editorState: EditorState
   event: Events
 }
