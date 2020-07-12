@@ -2,7 +2,6 @@ import React from 'react'
 import { 
   Editor, 
   EditorState, 
-  SelectionState, 
   RichUtils, 
   ContentBlock,
   Modifier,
@@ -10,37 +9,17 @@ import {
   convertToRaw
 } from 'draft-js'
 import {Map} from 'immutable'
+import classNames from 'classnames'
 import {customStyleMap, blockRenderMap} from './config/tool-bar-config'
 import {IMyEditor, IeditoRef} from './index.d'
-import {insertText, removeInlineStyle} from '../../utils/index'
+import {insertText, removeInlineStyle, applyInlineStyle} from '../../utils/index'
 import './style.less'
 
-// const insertText = (editorState: EditorState, text='‎',  styles: string[]) => {
-//   const inlineStyles:string[] = editorState.getCurrentInlineStyle().toJS()
-//   const contentState = editorState.getCurrentContent()
-//   const selectState = editorState.getSelection()
-//   let draftInlineStyle = OrderedSet<string>(inlineStyles)
-//   styles.forEach(
-//     ss => draftInlineStyle = draftInlineStyle.has(ss) ? draftInlineStyle.delete(ss) : draftInlineStyle.add(ss)
-//   )
-//   const newContentState = Modifier.insertText(contentState, selectState, text, draftInlineStyle)
-//   let nextState = EditorState.createWithContent(newContentState)
-
-//   const key = selectState.getAnchorKey()
-//   const length = selectState.getFocusOffset() + text.length
-//   const nextSelectState = new SelectionState({
-//     anchorKey: key,
-//     anchorOffset: length,
-//     focusKey: key,
-//     focusOffset: length,
-//   })
-//   nextState = EditorState.acceptSelection(nextState, nextSelectState)
-
-//   return nextState
-// }
 
 const MyEditor: React.FC<IMyEditor> = (props) => {
   const {ederiotRef, editorState, setEditorState, onChange, event, stack} = props
+  // 点击格式刷分两段，第一段设置为true
+  const [formatBrush, setFormatBrush] = React.useState(false)
   const editorRef = React.useRef((null as IeditoRef))
   // 解决闭包内拿不到最新editorState
   const stateRef = React.useRef(editorState)
@@ -101,6 +80,8 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
         const state = removeInlineStyle(stateRef.current, /.*/)
         setEditorState(state)
         return state
+      } else if (action === 'applyStyle') {
+        setFormatBrush(true)
       }
     })
     event.fireFinish((eventName:string, params:any[], result:EditorState) => {
@@ -113,11 +94,19 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
   const change = (state: EditorState) => {
     const oldText = editorState.getCurrentContent().getPlainText()        
     const newText = state.getCurrentContent().getPlainText()
-    setEditorState(state)
     if(newText !== oldText){       
       typeof onChange === 'function' && onChange(state)
       stack.push(state)
     }
+    if (formatBrush) {
+      const inlineStyles:string[] = editorState.getCurrentInlineStyle().toJS()
+      const newState = applyInlineStyle(state, inlineStyles)
+      setFormatBrush(false)
+      setEditorState(newState)
+      return
+    }
+    setEditorState(state)
+    
   }
 
   // 每次变化都会调用，根据不同的key添加不同的className
@@ -127,10 +116,11 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
 
   return (
     <div
+      className={classNames({formatBrush: formatBrush})}
       style={{
         border: '1px solid #ccc',
         // height: 'calc(100% - 35px)',
-        padding: '10px 20px'
+        padding: '10px 20px',
       }}
       onClick={(e) => {
         // activeElement 属性返回文档中当前获得焦点的元素。

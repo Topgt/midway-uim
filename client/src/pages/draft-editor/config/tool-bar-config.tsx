@@ -133,7 +133,7 @@ export const toolbarArea: ItoolbarArea = [
     action: 'format',
     type: 'bnt',
     areas: [
-      {lable: '格式刷', fontIcon: '&#xe617;', value: '12'},
+      {lable: '格式刷', fontIcon: '&#xe617;', value: 'applyStyle'},
       {lable: '清除格式', fontIcon: '&#xe65b;', value: 'clearStyle'},
     ]
   }, [{

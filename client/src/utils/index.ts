@@ -4,6 +4,7 @@ import {
   moveSelectionToEnd,
   removeBlockStyle,
   removeInlineStyle,
+  applyInlineStyle,
   insertText
 } from './draft'
 
@@ -13,5 +14,6 @@ export {
   moveSelectionToEnd,
   removeBlockStyle,
   removeInlineStyle,
+  applyInlineStyle,
   insertText
 }

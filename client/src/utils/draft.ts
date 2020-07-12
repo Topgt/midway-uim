@@ -62,6 +62,18 @@ const removeInlineStyle = (editorState: EditorState, rule: RegExp) => {
   return EditorState.push(editorState, newContentState, 'change-inline-style')
 }
 
+const applyInlineStyle = (editorState: EditorState, styles: string[]) => {
+  const newEditorState = removeInlineStyle(editorState, /.*/)
+  const contentState = newEditorState.getCurrentContent()
+  const selectState = newEditorState.getSelection()
+  
+  let newContentState = contentState
+  styles.forEach(
+    ss => newContentState = Modifier.applyInlineStyle(newContentState, selectState, ss)
+  )
+  return EditorState.push(newEditorState, newContentState, 'change-inline-style')
+}
+
 const insertText = (editorState: EditorState, text='‎',  styles: string[]) => {
   const inlineStyles:string[] = editorState.getCurrentInlineStyle().toJS()
   const contentState = editorState.getCurrentContent()
@@ -90,5 +102,6 @@ export {
   moveSelectionToEnd,
   removeInlineStyle,
   removeBlockStyle,
+  applyInlineStyle,
   insertText
 }
