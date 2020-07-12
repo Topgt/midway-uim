@@ -134,7 +134,7 @@ export const toolbarArea: ItoolbarArea = [
     type: 'bnt',
     areas: [
       {lable: '格式刷', fontIcon: '&#xe617;', value: '12'},
-      {lable: '清除格式', fontIcon: '&#xe65b;', value: '23'},
+      {lable: '清除格式', fontIcon: '&#xe65b;', value: 'clearStyle'},
     ]
   }, [{
     action: 'toggleBlockType',

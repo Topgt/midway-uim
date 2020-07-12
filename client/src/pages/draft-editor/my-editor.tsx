@@ -9,48 +9,35 @@ import {
   DefaultDraftBlockRenderMap,
   convertToRaw
 } from 'draft-js'
-import {Map, OrderedSet} from 'immutable'
+import {Map} from 'immutable'
 import {customStyleMap, blockRenderMap} from './config/tool-bar-config'
 import {IMyEditor, IeditoRef} from './index.d'
+import {insertText, removeInlineStyle} from '../../utils/index'
 import './style.less'
 
-const moveSelectionToEnd = (editorState: EditorState) => {
-  const content = editorState.getCurrentContent()
-  const blockMap = content.getBlockMap()
-  const key = blockMap.last().getKey()
-  const length = blockMap.last().getLength()
-  const selection = new SelectionState({
-    anchorKey: key,
-    anchorOffset: length,
-    focusKey: key,
-    focusOffset: length,
-  })
-  return EditorState.acceptSelection(editorState, selection)
-}
+// const insertText = (editorState: EditorState, text='‎',  styles: string[]) => {
+//   const inlineStyles:string[] = editorState.getCurrentInlineStyle().toJS()
+//   const contentState = editorState.getCurrentContent()
+//   const selectState = editorState.getSelection()
+//   let draftInlineStyle = OrderedSet<string>(inlineStyles)
+//   styles.forEach(
+//     ss => draftInlineStyle = draftInlineStyle.has(ss) ? draftInlineStyle.delete(ss) : draftInlineStyle.add(ss)
+//   )
+//   const newContentState = Modifier.insertText(contentState, selectState, text, draftInlineStyle)
+//   let nextState = EditorState.createWithContent(newContentState)
 
-const insertText = (editorState: EditorState, text='‎',  styles: string[]) => {
-  const inlineStyles:string[] = editorState.getCurrentInlineStyle().toJS()
-  const contentState = editorState.getCurrentContent()
-  const selectState = editorState.getSelection()
-  let draftInlineStyle = OrderedSet<string>(inlineStyles)
-  styles.forEach(
-    ss => draftInlineStyle = draftInlineStyle.has(ss) ? draftInlineStyle.delete(ss) : draftInlineStyle.add(ss)
-  )
-  const newContentState = Modifier.insertText(contentState, selectState, text, draftInlineStyle)
-  let nextState = EditorState.createWithContent(newContentState)
+//   const key = selectState.getAnchorKey()
+//   const length = selectState.getFocusOffset() + text.length
+//   const nextSelectState = new SelectionState({
+//     anchorKey: key,
+//     anchorOffset: length,
+//     focusKey: key,
+//     focusOffset: length,
+//   })
+//   nextState = EditorState.acceptSelection(nextState, nextSelectState)
 
-  const key = selectState.getAnchorKey()
-  const length = selectState.getFocusOffset() + text.length
-  const nextSelectState = new SelectionState({
-    anchorKey: key,
-    anchorOffset: length,
-    focusKey: key,
-    focusOffset: length,
-  })
-  nextState = EditorState.acceptSelection(nextState, nextSelectState)
-
-  return nextState
-}
+//   return nextState
+// }
 
 const MyEditor: React.FC<IMyEditor> = (props) => {
   const {ederiotRef, editorState, setEditorState, onChange, event, stack} = props
@@ -107,6 +94,14 @@ const MyEditor: React.FC<IMyEditor> = (props) => {
       let state = EditorState.createWithContent(contentState)
       state = EditorState.acceptSelection(state, selectState)
       setEditorState(state)
+      return state
+    })
+    event.on('format', (action: string) => {
+      if (action === 'clearStyle') {
+        const state = removeInlineStyle(stateRef.current, /.*/)
+        setEditorState(state)
+        return state
+      }
     })
     event.fireFinish((eventName:string, params:any[], result:EditorState) => {
       if (!['changeEditorState'].includes(eventName) && result) {
