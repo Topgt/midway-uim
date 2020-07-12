@@ -44,9 +44,9 @@ const removeInlineStyle = (editorState: EditorState, rule: RegExp) => {
   const selectState = editorState.getSelection()
   const startKey = selectState.getStartKey()
   const endKey = selectState.getEndKey()
-  let key
-  while(key !== endKey && key !== null) {
-    key = contentState.getKeyAfter(key || startKey)
+  let key = ''
+  while(key !== endKey && key !== undefined) {
+    key = contentState.getKeyAfter(key || startKey) || startKey
     const block = contentState.getBlockForKey(key || startKey)
     const list = block.getCharacterList()
     list.forEach(d => {
