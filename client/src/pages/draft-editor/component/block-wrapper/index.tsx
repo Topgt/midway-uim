@@ -1,6 +1,5 @@
-import React, { Children } from 'react'
+import React from 'react'
 import _ from 'lodash'
-import { CharacterMetadata, ContentBlock } from 'draft-js'
 import {removeBlockStyle as removeInlineStyle} from '../../../../utils'
 
 // 多个可兼容的block样式的组合处理
