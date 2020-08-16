@@ -12,7 +12,7 @@
   "dependencies": {
     "antd": "^3.19.5",
     "classnames": "^2.2.6",
-    "draft-js": "^0.11.3",
+    "double-a-edito": "^0.0.9",
     "dva": "^2.6.0-beta.6",
     "griffith": "^1.5.0",
     "highlight.js": "^9.15.10",
